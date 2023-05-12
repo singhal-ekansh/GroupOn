@@ -94,7 +94,7 @@ body {
 		<p class="hint-text">Create your account. It's free and only takes a minute.</p>
    
     <%= form_with(model: @user) do |form|%>
-			 <div class="alert alert-danger"> <%= render partial: "shared/error_messages", locals: {form: form} %> </div>
+			 <%= render partial: "shared/error_messages", locals: {form: form} %>
       <div class="form-group">
         <%= form.text_field :first_name , class: "form-control", placeholder: "First Name" %>
       </div>

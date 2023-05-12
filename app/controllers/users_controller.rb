@@ -8,11 +8,24 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to @user
+      redirect_to new_session_path
     else
       render :new
     end
 
+  end
+
+  def verify_user
+    token = params[:token]
+    user = User.find_signed!(token, purpose: 'email_verification')
+    if user.update(verified_at: Time.now)
+      redirect_to new_session_url, notice: 'email verified, login to continue'
+    else
+      redirect_to new_session_url, notice: 'email could not be verified'
+    end
+
+  rescue ActiveSupport::MessageVerifier::InvalidSignature
+    redirect_to new_session_url, notice: 'email verify link expired'
   end
 
   private 
