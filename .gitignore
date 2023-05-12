@@ -31,4 +31,17 @@
 /config/master.key
 
 /config/database.yml
+<<<<<<< HEAD
 /node_modules
+=======
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
+>>>>>>> ee6adfc (webpacker installed and bootstrap)

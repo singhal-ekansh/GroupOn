@@ -14,6 +14,8 @@ gem 'bootsnap', require: false
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
+# Use Sass to process CSS
+gem "sassc-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
@@ -58,3 +60,6 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
+
+gem "webpacker"
+gem "cssbundling-rails", "~> 1.1"
