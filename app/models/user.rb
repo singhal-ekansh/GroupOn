@@ -7,4 +7,12 @@ class User < ApplicationRecord
   }, allow_blank: true
 
   has_secure_password
+
+  after_create_commit :send_verification_email
+
+  private
+
+  def send_verification_email
+    UserMailer.email_verification(self).deliver_later unless is_admin
+  end
 end

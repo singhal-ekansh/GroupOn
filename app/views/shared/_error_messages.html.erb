@@ -1,4 +1,5 @@
 <% if form.object.errors.any? %>
+<div class="alert alert-danger"> 
   <div id="error_explanation">
     <ul>
       <% form.object.errors.full_messages.each do |message| %>
@@ -6,4 +7,5 @@
       <% end %>
     </ul>
   </div>
+</div>
 <% end %>
