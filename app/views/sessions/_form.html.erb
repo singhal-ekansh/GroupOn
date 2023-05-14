@@ -12,8 +12,9 @@
       <%= form.password_field :password , class: "form-control", placeholder: "password", required: true %>
     </div>   
 
+    <p class="float-right">
 		<%= link_to "forget password?", reset_password_email_url %>
-      
+    </p>
     <div class="form-group">
         <%= form.submit :login , class: "btn btn-success btn-lg btn-block" %>
     </div>
