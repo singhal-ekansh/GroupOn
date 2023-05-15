@@ -8,8 +8,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      flash[:notice] = "verify email address to login by clicking link send to your email"
-      redirect_to new_session_path
+      redirect_to new_session_path, notice: "verify email address to login by clicking link send to your email"
     else
       render :new
     end
