@@ -5,11 +5,14 @@ Rails.application.routes.draw do
   # root "articles#index"
   resources :users, only: [:create, :new, :show]
   get "/user-verify", to: "users#verify_user"
-  get "/reset-password-email", to: "users#forget_password_get"
-  post "/reset-password-email", to: "users#forget_password_post"
+  
+  resources :request_passwords, only: [:create, :new]
+  # get "/reset-password-email", to: "users#forget_password_get"
+  # post "/reset-password-email", to: "users#forget_password_post"
 
-  get "/reset-password", to: "users#reset_password_get"
-  post "/reset-password", to: "users#reset_password_post"
+  resources :reset_passwords, only: [:create, :new]
+  # get "/reset-password", to: "users#reset_password_get"
+  # post "/reset-password", to: "users#reset_password_post"
 
   resources :sessions, only: [:create, :new]
   root "users#new"
