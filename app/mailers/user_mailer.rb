@@ -6,7 +6,7 @@ class UserMailer < ApplicationMailer
   end
 
   def reset_password(user)
-    @token = user.signed_id(purpose: 'reset_password', expires_in: 5.minutes)
+    @token = User.generate_reset_password_token(user)
     mail to: user.email, subject: 'GroupOn account recovery'
   end
 end
