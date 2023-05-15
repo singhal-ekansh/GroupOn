@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
 
-<<<<<<< HEAD
   before_action :already_authenticated
   skip_before_action :authentication_required
 
-=======
->>>>>>> 9f196cf (user register form and controllers)
+  before_action :already_authenticated
+  skip_before_action :authentication_required
+
   def new
     @user = User.new
   end
@@ -14,11 +14,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-<<<<<<< HEAD
       redirect_to new_session_path, notice: "verify email address to login by clicking link send to your email"
-=======
-      redirect_to @user
->>>>>>> 9f196cf (user register form and controllers)
     else
       render :new
     end
