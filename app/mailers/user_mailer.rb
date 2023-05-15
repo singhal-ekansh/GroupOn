@@ -1,7 +1,7 @@
 class UserMailer < ApplicationMailer
   default from: "from@example.com"
   def email_verification(user)
-    @token = user.signed_id(purpose: 'email_verification', expires_in: 5.minutes)
+    @token = User.generate_verify_token(user)
     mail to: user.email, subject: 'GroupOn register verification'
   end
 
