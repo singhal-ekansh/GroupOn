@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :request_passwords, only: [:create, :new]
   
   resources :reset_passwords, only: [:create, :new]
-  
-  resources :sessions, only: [:create, :new]
+
+  resources :sessions, only: [:create, :new, :destroy]
   root "users#new"
 end
