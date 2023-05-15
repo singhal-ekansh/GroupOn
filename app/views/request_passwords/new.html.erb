@@ -4,15 +4,17 @@
 	<h2>Recover</h2>
 	<p class="hint-text">Enter your email address, a password recovery link will be sent to you.</p>
    
-  <%= form_with  do |form|%>
+  <%= form_with url: request_passwords_url do |form|%>
 		
 		<div class="form-group">
 			<%= form.email_field :email , class: "form-control", placeholder: "email", required: true %>
 		</div>
 
+    <center>
 		<div class="form-group">
       <%= form.submit "send reset link" , class: "btn btn-success btn-lg btn-block" %>
     </div>
+    </center>
   <%end%>
 
 </div>
