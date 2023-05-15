@@ -14,6 +14,6 @@ Rails.application.routes.draw do
   # get "/reset-password", to: "users#reset_password_get"
   # post "/reset-password", to: "users#reset_password_post"
 
-  resources :sessions, only: [:create, :new]
+  resources :sessions, only: [:create, :new, :destroy]
   root "users#new"
 end

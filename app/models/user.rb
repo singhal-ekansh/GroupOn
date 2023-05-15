@@ -11,20 +11,20 @@ class User < ApplicationRecord
   after_create_commit :send_verification_email
 
   
-  def generate_verify_token(user)
-    user.signed_id(purpose: 'email_verification', expires_in: 5.minutes)
+  def generate_verify_token
+    signed_id(purpose: 'email_verification', expires_in: 5.minutes)
   end
 
-  def generate_reset_password_token(user)
-    user.signed_id(purpose: 'reset_password', expires_in: 5.minutes)
+  def generate_reset_password_token
+    signed_id(purpose: 'reset_password', expires_in: 5.minutes)
   end
 
   def send_verification_email
     UserMailer.email_verification(self).deliver_later unless is_admin
   end
 
-  def send_reset_password_mail(user)
-    UserMailer.reset_password(user).deliver_later
+  def send_reset_password_mail
+    UserMailer.reset_password(self).deliver_later
   end
 
 end
