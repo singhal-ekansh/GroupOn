@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_11_071544) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_16_073102) do
+  create_table "deals", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description", null: false
+    t.integer "price", null: false
+    t.datetime "start_at"
+    t.datetime "expire_at"
+    t.integer "threshold_value", null: false
+    t.integer "total_availaible", null: false
+    t.integer "max_per_user"
+    t.boolean "published", default: false, null: false
+    t.integer "count_left"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_deals_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
@@ -24,4 +41,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_11_071544) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "deals", "users"
 end
