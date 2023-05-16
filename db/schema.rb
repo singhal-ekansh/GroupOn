@@ -15,12 +15,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_16_073102) do
     t.string "title", null: false
     t.text "description", null: false
     t.integer "price", null: false
-    t.datetime "start_at"
-    t.datetime "expire_at"
+    t.datetime "start_at", null: false
+    t.datetime "expire_at", null: false
     t.integer "threshold_value", null: false
     t.integer "total_availaible", null: false
     t.integer "max_per_user"
-    t.boolean "published", default: false, null: false
+    t.boolean "published", default: false
     t.integer "count_left"
     t.bigint "user_id"
     t.datetime "created_at", null: false
