@@ -7,6 +7,7 @@ class User < ApplicationRecord
   }, allow_blank: true
 
   has_secure_password
+  has_many :deals
 
   after_create_commit :send_verification_email
 
