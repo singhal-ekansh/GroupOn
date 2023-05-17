@@ -6,6 +6,6 @@ class CreateCategories < ActiveRecord::Migration[7.0]
       t.timestamps
     end
     
-    add_reference :users, :category, foreign_key: true
+    add_reference :deals, :category, foreign_key: true
   end
 end
