@@ -7,6 +7,7 @@ class User < ApplicationRecord
   }, allow_blank: true
 
   has_secure_password
+  has_many :deals
 
   after_create :generate_verify_token, unless: :is_admin?
   after_create_commit :send_verification_email, unless: :is_admin?
