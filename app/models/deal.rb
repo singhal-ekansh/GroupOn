@@ -7,6 +7,7 @@ class Deal < ApplicationRecord
 
   belongs_to :user
   belongs_to :category
+  has_many_attached :images
 
   before_create :set_count_left
 
