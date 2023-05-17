@@ -31,6 +31,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_17_052359) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_deals_on_category_id"
     t.index ["user_id"], name: "index_deals_on_user_id"
   end
 
@@ -44,11 +46,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_17_052359) do
     t.datetime "password_last_reset_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "category_id"
-    t.index ["category_id"], name: "index_users_on_category_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "deals", "categories"
   add_foreign_key "deals", "users"
-  add_foreign_key "users", "categories"
 end
