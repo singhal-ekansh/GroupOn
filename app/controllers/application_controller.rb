@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :authentication_required
 
   def current_user
-    User.find_by(id: session[:user_id])
+    @current_user ||= User.find_by(id: session[:user_id])
   end
 
   def authentication_required
@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   def already_authenticated
     if current_user
-      # redirect_to , alert: 'Already logged in'
+      redirect_to user_url(session[:user_id]), alert: 'Already logged in'
     end
   end
 end

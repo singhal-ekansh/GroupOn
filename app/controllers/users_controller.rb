@@ -1,13 +1,17 @@
 class UsersController < ApplicationController
 
-  before_action :already_authenticated
-  skip_before_action :authentication_required
+  before_action :already_authenticated, only: [:new, :create]
+  skip_before_action :authentication_required,  except: [:show, :edit, :update]
 
   before_action :already_authenticated
   skip_before_action :authentication_required
 
   def new
     @user = User.new
+  end
+
+  def show
+    @user = User.find_by(id: session[:user_id])
   end
 
   def create
@@ -20,6 +24,21 @@ class UsersController < ApplicationController
     end
 
   end
+
+  def edit
+    @user = User.find_by(id: session[:user_id])
+  end
+
+  def update
+    debugger
+    @user = User.find_by(id: session[:user_id])
+    if @user.update(user_params)
+      redirect_to @user, notice: "Profile updated"
+    else
+      render :edit
+    end
+  end
+
 
   def verify_user
     token = params[:token]

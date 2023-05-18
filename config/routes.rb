@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  resources :users, only: [:create, :new, :show]
+  resources :users
   get "/user-verify", to: "users#verify_user"
   
   resources :request_passwords, only: [:create, :new]
