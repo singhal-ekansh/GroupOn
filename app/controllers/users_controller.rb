@@ -6,6 +6,10 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def show
+    @user = User.find_by(id: session[:user_id])
+  end
+
   def create
     @user = User.new(user_params)
 
@@ -16,6 +20,21 @@ class UsersController < ApplicationController
     end
 
   end
+
+  def edit
+    @user = User.find_by(id: session[:user_id])
+  end
+
+  def update
+    debugger
+    @user = User.find_by(id: session[:user_id])
+    if @user.update(user_params)
+      redirect_to @user, notice: "Profile updated"
+    else
+      render :edit
+    end
+  end
+
 
   def verify_user
     token = params[:token]

@@ -1,3 +1,4 @@
+
 class SessionsController < ApplicationController
 
   before_action :ensure_anonymous, except: [:destroy]
