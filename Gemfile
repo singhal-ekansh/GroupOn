@@ -12,6 +12,7 @@ gem 'bcrypt', '~> 3.1.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
+gem "cssbundling-rails", "~> 1.1"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
 # Use Sass to process CSS
@@ -19,6 +20,8 @@ gem "sassc-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
+
+gem 'jsbundling-rails'
 
 # Use mysql as the database for Active Record
 gem 'mysql2', '~> 0.5'
@@ -60,5 +63,3 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
-
-gem "cssbundling-rails", "~> 1.1"
