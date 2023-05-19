@@ -1,14 +1,14 @@
 namespace :admin do
   task :new => :environment do
-    p "enter first name"
+    print "enter first name: "
     first = STDIN.gets.chomp
-    p "enter last name"
+    print "enter last name: "
     last = STDIN.gets.chomp
-    p "enter email address"
+    print "enter email address: "
     email = STDIN.gets.chomp
-    p "enter password"
+    print "enter password: "
     password = STDIN.gets.chomp
-    p "confirm password"
+    print "confirm password: "
     confirm = STDIN.gets.chomp
     
     u = User.create(first_name: first, last_name: last, email: email,
