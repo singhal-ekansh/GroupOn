@@ -11,8 +11,7 @@ class SessionsController < ApplicationController
         redirect_to new_session_url, alert: "email not verified, click on the link sent to your email"
       else
         session[:user_id] = user.id
-        debugger
-      # redirect_to 
+      # redirect_to //TODO
       end
     else
       redirect_to new_session_url, alert: "Invalid user/password combination"

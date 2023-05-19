@@ -14,7 +14,7 @@ class ResetPasswordsController < ApplicationController
     else
       # handle if password and confirm not matched
       flash.now[:alert] = 'password did not match'
-      render :reset_password_get
+      render :new
     end
   end
 

@@ -63,6 +63,3 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
-
-gem "webpacker"
-gem "cssbundling-rails", "~> 1.1"

@@ -185,7 +185,6 @@ braces@~3.0.2:
   optionalDependencies:
     fsevents "~2.3.2"
 
-<<<<<<< HEAD
 esbuild@^0.17.19:
   version "0.17.19"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.17.19.tgz#087a727e98299f0462a3d0bcdd9cd7ff100bd955"
@@ -214,8 +213,6 @@ esbuild@^0.17.19:
     "@esbuild/win32-ia32" "0.17.19"
     "@esbuild/win32-x64" "0.17.19"
 
-=======
->>>>>>> ee6adfc (webpacker installed and bootstrap)
 fill-range@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-7.0.1.tgz#1919a6a7c75fe38b2c7c77e5198535da9acdda40"
