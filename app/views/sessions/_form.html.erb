@@ -2,29 +2,29 @@
 <div class="signup-form">
   <%= render partial: "shared/alert_message"%>
   <h2>Login</h2>
-  <%= form_with url: sessions_path do |form|%>
-    <%= render partial: "shared/error_messages", locals: {form: form} %>
+  <%= form_with url: sessions_path do |form|%> <%= render partial:
+  "shared/error_messages", locals: {form: form} %>
 
-    <div class="form-group">
-      <%= form.email_field :email , class: "form-control", placeholder: "email", required: true %>
-    </div>
-    <div class="form-group">
-      <%= form.password_field :password , class: "form-control", placeholder: "password", required: true %>
-    </div>   
+  <div class="form-group">
+    <%= form.email_field :email , class: "form-control", placeholder: "email",
+    required: true %>
+  </div>
+  <div class="form-group">
+    <%= form.password_field :password , class: "form-control", placeholder:
+    "password", required: true %>
+  </div>
 
-    <p class="float-right">
-		<%= link_to "forget password?", new_request_password_url %>
-    </p>
-    <center>
+  <p class="float-right">
+    <%= link_to "forget password?", new_request_password_url %>
+  </p>
+  <center>
     <div class="form-group">
-        <%= form.submit :login , class: "btn btn-success btn-lg btn-block" %>
+      <%= form.submit :login , class: "btn btn-success btn-lg btn-block" %>
     </div>
-    </center>
+  </center>
   <%end%>
 
-<div class="text-center">
-  Don't have an account? 
-  <%= link_to "Sign up", new_user_url%>
-</div>
-
+  <div class="text-center">
+    Don't have an account? <%= link_to "Sign up", new_user_url%>
+  </div>
 </div>
