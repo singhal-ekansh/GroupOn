@@ -5,6 +5,7 @@ class CreateLocations < ActiveRecord::Migration[7.0]
       t.string :state, null: false
       t.string :city, null: false
       t.string :pincode, null: false
+      t.references :deal, foreign_key: true
       t.timestamps
     end
   end

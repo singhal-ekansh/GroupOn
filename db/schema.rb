@@ -69,8 +69,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_075139) do
     t.string "state", null: false
     t.string "city", null: false
     t.string "pincode", null: false
+    t.bigint "deal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deal_id"], name: "index_locations_on_deal_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -90,4 +92,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_075139) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "deals", "categories"
   add_foreign_key "deals", "users"
+  add_foreign_key "locations", "deals"
 end
