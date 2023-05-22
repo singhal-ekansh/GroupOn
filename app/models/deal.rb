@@ -9,6 +9,7 @@ class Deal < ApplicationRecord
   belongs_to :category
   has_many_attached :images
   has_many :locations
+  accepts_nested_attributes_for :locations
 
   before_create :set_count_left
 

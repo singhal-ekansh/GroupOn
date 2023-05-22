@@ -1,5 +1,6 @@
 <%= stylesheet_link_tag "login_form"%>
 
+<div class='container mt-4'>
 <center><h1>NEW DEAL</h1></center>
 <br />
 
@@ -57,6 +58,22 @@
       </div>
     </div>
   </div>
+<br>
+<%= form.label :locations %>
+<div class='addresses'>
+  <ul>
+  <%= form.fields_for :locations do |location_form| %>
+    <li>
+
+    <%= render 'location_fields', f: location_form %>
+    </li>
+    <%end%>
+  </ul>
+  </div>
+
+  <%= link_to_add_association 'Add Location', form, :locations, class: 'btn btn-primary', data: {
+  association_insertion_node: '.addresses', association_insertion_method: :append } %>
+
 
   <div class="form-group">
     <%= form.label 'Deal Category'%> 
@@ -82,4 +99,5 @@
 
 
   <%end%>
+</div>
 </div>
