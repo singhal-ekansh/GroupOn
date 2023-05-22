@@ -64,13 +64,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_075139) do
     t.index ["user_id"], name: "index_deals_on_user_id"
   end
 
-  create_table "deals_locations", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "deal_id"
-    t.bigint "location_id"
-    t.index ["deal_id"], name: "index_deals_locations_on_deal_id"
-    t.index ["location_id"], name: "index_deals_locations_on_location_id"
-  end
-
   create_table "locations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "address", null: false
     t.string "state", null: false

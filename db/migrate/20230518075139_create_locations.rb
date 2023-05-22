@@ -7,10 +7,5 @@ class CreateLocations < ActiveRecord::Migration[7.0]
       t.string :pincode, null: false
       t.timestamps
     end
-
-    create_table :deals_locations, id: false do |t|
-      t.belongs_to :deal
-      t.belongs_to :location
-    end
   end
 end
