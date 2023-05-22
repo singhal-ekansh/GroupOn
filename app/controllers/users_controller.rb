@@ -3,9 +3,6 @@ class UsersController < ApplicationController
   before_action :already_authenticated, only: [:new, :create]
   skip_before_action :authentication_required,  except: [:show, :edit, :update]
 
-  before_action :already_authenticated
-  skip_before_action :authentication_required
-
   def new
     @user = User.new
   end
