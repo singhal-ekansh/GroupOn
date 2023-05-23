@@ -1,5 +1,21 @@
 <%= stylesheet_link_tag "login_form"%>
+<script>
+$(document).ready(function(){
+ $('form').on('click', '.remove_record', function(event) {
+    $(this).prev('input[type=hidden]').val('1');
+    $(this).closest('li').hide();
+    return event.preventDefault();
+  });
 
+  $('form').on('click', '.add_fields', function(event) {
+    var regexp, time;
+    time = new Date().getTime();
+    regexp = new RegExp($(this).data('id'), 'g');
+    $('.addresses').append($(this).data('fields').replace(regexp, time));
+    return event.preventDefault();
+  });
+});
+</script>
 <div class='container mt-4'>
 <center><h1>NEW DEAL</h1></center>
 <br />
@@ -60,20 +76,20 @@
   </div>
 <br>
 <%= form.label :locations %>
-<div class='addresses'>
+
   <ul>
+  <div class='addresses'>
   <%= form.fields_for :locations do |location_form| %>
-    <li>
+  
 
-    <%= render 'location_fields', f: location_form %>
-    </li>
+    <%= render 'location', f: location_form %>
+   
+     
     <%end%>
-  </ul>
   </div>
+  </ul>
 
-  <%= link_to_add_association 'Add Location', form, :locations, class: 'btn btn-primary', data: {
-  association_insertion_node: '.addresses', association_insertion_method: :append } %>
-
+  <%= link_to_add_row('Add Location', form , :locations, class: 'btn btn-primary') %>
 
   <div class="form-group">
     <%= form.label 'Deal Category'%> 
