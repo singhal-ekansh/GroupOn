@@ -11,7 +11,7 @@ $(document).ready(function(){
     var regexp, time;
     time = new Date().getTime();
     regexp = new RegExp($(this).data('id'), 'g');
-    $('.addresses').append($(this).data('fields').replace(regexp, time));
+    $($(this).data('target')).append($(this).data('fields').replace(regexp, time));
     return event.preventDefault();
   });
 });
@@ -89,7 +89,7 @@ $(document).ready(function(){
   </div>
   </ul>
 
-  <%= link_to_add_row('Add Location', form , :locations, class: 'btn btn-primary') %>
+  <%= link_to_add_row('Add Location', form , :locations, class: 'btn btn-primary', target: ".addresses") %>
 
   <div class="form-group">
     <%= form.label 'Deal Category'%> 
@@ -102,10 +102,19 @@ $(document).ready(function(){
     <%= form.check_box :published %>
   </div>
 
-  <div class='custom-file'>
-    <%= form.label 'Deal Images', style: "display: block" %>
-    <%= form.file_field :images, multiple: true %>
+  <%= form.label :images %>
+
+  <ul>
+  <div class='images'>
+  <%= form.fields_for :images_attachments do |image_form| %>
+    <%= render 'images_attachment' , f: image_form%>
+  
+  <%end%>
   </div>
+  </ul>
+
+ <%= link_to_add_row('Add Images', form , :images_attachments, class: 'btn btn-primary', target: ".images") %>
+  
 
  <center>
   <div>
