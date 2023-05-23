@@ -1,0 +1,2 @@
+VERIFY_EXPIRE_TIME = 5.minutes 
+RESET_EXPIRE_TIME = 5.minutes

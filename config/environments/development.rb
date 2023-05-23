@@ -9,7 +9,7 @@ Rails.application.configure do
     domain: "domain.of.sender.net",
     authentication: "plain",
     user_name: "ekansin05",
-    password: "ouloyzlldlytiiac",
+    password: Rails.application.credentials.dig(:action_mailer, :smtp, :password),
     enable_starttls_auto: true
   }
   config.action_mailer.default_url_options = { :host => "localhost:3000" }

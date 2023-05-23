@@ -8,15 +8,17 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  # after_create :generate_verify_token
   after_create_commit :send_verification_email
 
+  scope :verified_users, -> { where.not(verified_at: nil) }
   
   def generate_verify_token
-    signed_id(purpose: 'email_verification', expires_in: 5.minutes)
+    signed_id(purpose: 'email_verification', expires_in: VERIFY_EXPIRE_TIME)
   end
 
   def generate_reset_password_token
-    signed_id(purpose: 'reset_password', expires_in: 5.minutes)
+    signed_id(purpose: 'reset_password', expires_in: RESET_EXPIRE_TIME)
   end
 
   def send_verification_email
