@@ -1,2 +1,2 @@
-VERIFY_EXPIRE_TIME = 5.minutes 
-RESET_EXPIRE_TIME = 5.minutes
+VERIFY_EXPIRE_TIME = Rails.env.production? ? 30.minutes : 5.minutes 
+RESET_EXPIRE_TIME = Rails.env.production? ? 30.minutes : 5.minutes
