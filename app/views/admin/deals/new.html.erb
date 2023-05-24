@@ -107,7 +107,11 @@ $(document).ready(function(){
 
   <ul>
   <div class='images'>
-  
+  <% if @deal.images.attached?%>
+  <% @deal.images.each do |image|%>
+    <%= image_tag image if image.blob_id%>
+  <%end %>
+  <%end%>
   <%= form.fields_for :images_attachments do |image_form| %>
     <%= render 'images_attachment' , f: image_form%>
   

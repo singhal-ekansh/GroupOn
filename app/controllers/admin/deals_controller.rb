@@ -14,12 +14,12 @@ class Admin::DealsController < ApplicationController
     debugger
     @user = User.find(session[:user_id])
 
-    @deal = @user.deals.build(deal_params)
+    @deal = @user.deals.build(deal_params.except(:images_attachments_attributes))
     
-    # save_images
+    save_images
     
     if @deal.save
-      redirect_to :index, notice: "deal added successfully"
+      redirect_to edit_admin_deal_path(@deal), notice: "deal added successfully"
     else
       render :new
     end
@@ -35,8 +35,8 @@ class Admin::DealsController < ApplicationController
 
   private def save_images
     params[:deal][:images_attachments_attributes]&.each do |k,v|
-      next unless v[:image].present?
-      @deal.images.attach(v[:image]) if v[:_destroy].eql?('false')
+      next unless v[:images].present?
+      @deal.images.attach(v[:images]) if v[:_destroy].eql?('false')
     end
   end
 end
