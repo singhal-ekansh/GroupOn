@@ -114,6 +114,7 @@
   integrity sha512-lAhycmKnVOuRYNtRtatQR1LPQf2oYCkRGkSFnseDAKPl8lu5SOsK/e1sXe5a0Pc5kHIHe6P2I/ilntNv2xf3cA==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> ee6adfc (webpacker installed and bootstrap)
 =======
@@ -122,6 +123,8 @@
 
 >>>>>>> a0f7e14 (webpacker installed and bootstrap)
 >>>>>>> 7aa8e6e (webpacker installed and bootstrap)
+=======
+>>>>>>> 702fe3e (yarn file changes)
 "@hotwired/stimulus@^3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@hotwired/stimulus/-/stimulus-3.2.1.tgz#e3de23623b0c52c247aba4cd5d530d257008676b"
