@@ -1,0 +1,117 @@
+<%= stylesheet_link_tag "login_form" %>
+<script>
+  $(document).ready(function() {
+    $('form').on('click', '.remove_record', function(event) {
+      $(this).prev('input[type=hidden]').val('1');
+      $(this).closest('li').hide();
+      return event.preventDefault();
+    });
+
+    $('form').on('click', '.add_fields', function(event) {
+      var regexp, time;
+      time = new Date().getTime();
+      regexp = new RegExp($(this).data('id'), 'g');
+      $($(this).data('target')).append($(this).data('fields').replace(regexp, time));
+      return event.preventDefault();
+    });
+  });
+</script>
+
+<div class="container mt-4 mb-4">
+  <div>
+    <%= form_with(model: [:admin, @deal]) do |form| %>
+      <%= render partial: "shared/error_messages", locals: { form: form } %>
+      <div class="form-group">
+        <%= form.label :title, 'Deal Title' %>
+        <%= form.text_field :title, class: 'form-control' %>
+      </div>
+
+      <div class="form-group mb-0">
+        <%= form.label :description, 'Deal Description' %>
+        <%= form.text_area :description, class: 'form-control' %>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <%= form.label :threshold_value, 'Min purchases for a deal to go through' %>
+            <%= form.text_field :threshold_value, class: 'form-control' %>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <%= form.label :total_availaible, 'Total Available' %>
+            <%= form.text_field :total_availaible, class: 'form-control' %>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <%= form.label :price, 'Price per deal' %>
+            <%= form.text_field :price, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <%= form.label :start_at, 'Deal start date' %>
+            <%= form.date_field :start_at, class: 'form-control' %>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <%= form.label :expire_at, 'Deal expire date' %>
+            <%= form.date_field :expire_at, class: 'form-control' %>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <%= form.label :max_per_user, 'Max deal allowed per user' %>
+            <%= form.text_field :max_per_user, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <%= form.label :locations %>
+        <ul class="addresses">
+          <%= form.fields_for :locations do |location_form| %>
+            <%= render 'location', f: location_form %>
+          <% end %>
+        </ul>
+        <%= link_to_add_row('Add Location', form, :locations, class: 'btn btn-primary', target: ".addresses") %>
+      </div>
+
+      <div class="mt-4">
+        <div class="form-group">
+          <%= form.label :category_id, 'Deal Category' %>
+          <%= form.select :category_id, Category.all.collect { |c| [c.name, c.id] }, { prompt: 'Select One' }, class: 'form-select custom-select-lg' %>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <div class="form-check">
+          <%= form.label :published, class: "form-check-label" %>
+          <%= form.check_box :published, class: "form-check-input" %>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <%= form.label :images %>
+        <ul class="images">
+          <%= form.fields_for :deal_images do |image_form| %>
+            <%= render 'deal_image', f: image_form %>
+          <% end %>
+        </ul>
+        <%= link_to_add_row('Add Image', form, :deal_images, class: 'btn btn-primary', target: ".images") %>
+      </div>
+
+      <div class="mt-4">
+        <div class="text-center">
+          <%= form.submit  class: 'btn btn-success btn-lg' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

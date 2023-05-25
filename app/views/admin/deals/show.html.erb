@@ -1,0 +1,55 @@
+<div class="container">
+  <div>
+    <% @deal.deal_images.each_with_index do |image, index| %>
+      <div class="image-sliderfade">
+        <%= image_tag image.file, class: "d-block w-100 carousel-image", alt: "Deal Image" %>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="card mt-3">
+    <div class="card-body">
+      <h5 class="card-title"><%= @deal.title %></h5>
+      <p class="card-text"><%= @deal.description %></p>
+      <p class="card-text"><strong>Price: </strong>$<%= @deal.price %></p>
+      <p class="card-text"><strong>Available: </strong><%= @deal.total_availaible %></p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .carousel-image {
+    max-height: 300px;
+    max-width: 50%;
+  }
+
+</style>
+
+<script>
+  var slideIndex = 0;
+  showSlides(); // call showslide method
+    
+  function showSlides()
+  {
+      var i;
+      // get the array of divs' with classname image-sliderfade
+      var slides = document.getElementsByClassName("image-sliderfade"); 
+      for (i = 0; i < slides.length; i++) {
+          // initially set the display to 
+          // none for every image.
+          slides[i].style.display = "none"; 
+      }
+      // increase by 1, Global variable
+      slideIndex++; 
+    
+      // check for boundary
+      if (slideIndex > slides.length) 
+      {
+          slideIndex = 1;
+      }
+    
+      slides[slideIndex - 1].style.display = "block";
+      // Change image every 2 seconds
+      setTimeout(showSlides, 4000); 
+  }
+</script>

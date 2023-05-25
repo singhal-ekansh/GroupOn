@@ -1,29 +1,35 @@
 <li>
-<div class="form-group">
-      <%= f.label :address %> 
-      <%= f.text_field :address, class: 'form-control' %>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="form-group">
+        <%= f.label :address %>
+        <%= f.text_field :address, class: 'form-control' %>
+      </div>
     </div>
-
-    <div class="row">
     <div class="col-lg-4">
       <div class="form-group">
-        <%= f.label :state %> 
+        <%= f.label :state %>
         <%= f.text_field :state, class: 'form-control' %>
       </div>
     </div>
     <div class="col-lg-4">
       <div class="form-group">
-        <%= f.label :city %> 
+        <%= f.label :city %>
         <%= f.text_field :city, class: 'form-control' %>
       </div>
-    </div>  
+    </div>
     <div class="col-lg-4">
       <div class="form-group">
-        <%= f.label :pincode %> 
+        <%= f.label :pincode %>
         <%= f.text_field :pincode, class: 'form-control' %>
       </div>
     </div>
-    <%= f.hidden_field :_destroy%>
-    <%= link_to 'Delete', '#', class: 'remove_record' %>
+    <br><br><br>
+    <div class="col-lg-12">
+      <div class="form-group">
+        <%= f.hidden_field :_destroy %>
+        <%= link_to 'Delete', '#', class: 'remove_record btn btn-danger', style: 'width: 80px; height: 40px;' %>
+      </div>
+    </div>
   </div>
-  </li>
+</li>

@@ -7,10 +7,10 @@ class Deal < ApplicationRecord
 
   belongs_to :user
   belongs_to :category
-  has_many :images, dependent: :destroy
+  has_many :deal_images, dependent: :destroy
   has_many :locations, dependent: :destroy
   accepts_nested_attributes_for :locations, allow_destroy: true
-  accepts_nested_attributes_for :images, allow_destroy: true
+  accepts_nested_attributes_for :deal_images, allow_destroy: true
 
   before_create :set_count_left
 
