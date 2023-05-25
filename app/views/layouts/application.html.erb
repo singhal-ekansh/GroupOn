@@ -7,11 +7,12 @@
     <%= csp_meta_tag %> 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-    <%= stylesheet_link_tag "login_form" %>
+    <%= stylesheet_link_tag "login_form"%>
   </head>
 
   <body>
     <%= render "layouts/navbar"%>
+    <%= render partial: "shared/alert_message"%>
     <%= yield %>
   </body>
 </html>
