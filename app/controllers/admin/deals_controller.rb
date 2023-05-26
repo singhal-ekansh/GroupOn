@@ -27,7 +27,7 @@ class Admin::DealsController < ApplicationController
     @deal = @user.deals.build(deal_params)
     
     if @deal.save
-      redirect_to edit_admin_deal_path(@deal), notice: "deal added successfully"
+      redirect_to admin_deal_path(@deal), notice: "deal added successfully"
     else
       render :new
     end
@@ -36,10 +36,11 @@ class Admin::DealsController < ApplicationController
   end
 
   def update
+    debugger
     @deal = Deal.find(params[:id])
   
     if @deal.update(deal_params)
-      redirect_to edit_admin_deal_path(@deal), notice: "deal updated successfully"
+      redirect_to admin_deal_path(@deal), notice: "deal updated successfully"
     else
       render :edit
     end

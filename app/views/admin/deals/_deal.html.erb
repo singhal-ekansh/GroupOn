@@ -1,18 +1,38 @@
 <div class="card my-3 mx-3 bg-light shadow">
-  <div class="row ">
+  <div class="row no-gutters">
     <% if !deal.deal_images.empty? && deal.deal_images[0].file.attached? %>
-    <div class="col-md-2">
-      <%= image_tag deal.deal_images[0].file, class: "card-img-left img-fluid", alt: "Deal Image" %>
+    <div class="col-md-2 d-flex align-items-center">
+      <%= image_tag deal.deal_images[0].file, class: "card-img img-fluid img-fixed-size mb-0" %>
     </div>
     <% end %>
-    <div class="col-md-5">
+    <div class="col-md-8">
       <div class="card-body text-dark">
         <h5 class="card-title"><%= deal.title %></h5>
-        <p class="card-text"><%= deal.description %></p>
+        <p class="card-text text-truncate"><%= deal.description %></p>
         <p class="card-text"><strong>Price: </strong>$<%= deal.price %></p>
         <p class="card-text"><strong>Available: </strong><%= deal.total_availaible %></p>
-        <a href="<%= admin_deal_path(deal) %>" class="btn btn-primary">View Details</a>
+        <div class="row">
+          <div class="col">
+            <%= link_to "View Details", admin_deal_path(deal), class: "btn btn-primary" %>
+          </div>
+          <div class="col">
+            <%= link_to "Edit Deal", edit_admin_deal_path(deal), class: "btn btn-primary" %>
+          </div>
+          <div class="col">
+            <a href="<%= edit_admin_deal_path(deal) %>" class="btn btn-primary">Edit Deal</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<style>
+  .img-fixed-size {
+    height: 200px; /* Set the desired height for the image */
+    width: 100%; /* Set the width to fill the container */
+    
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 0; /* Remove bottom margin */
+  }
+</style>
