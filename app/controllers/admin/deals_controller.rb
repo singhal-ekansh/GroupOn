@@ -46,10 +46,22 @@ class Admin::DealsController < ApplicationController
     end
   end
 
+  def destroy
+    @deal = Deal.find(params[:id])
+
+    if @deal.destroy
+      redirect_to admin_deals_path, notice: "deal successfully deleted"
+    else
+      debugger
+      flash.now[:alert] = "deal cant be deleted"
+      render 'index'
+    end
+  end
+
   private def deal_params
     params.require(:deal).permit(:title, :description, :threshold_value, :total_availaible, :price, :start_at,
        :expire_at, :max_per_user, :category_id, :published, deal_images_attributes: [:id, :_destroy, :file],
-        locations_attributes: Location.attribute_names.map(&:to_sym).push(:_destroy))
+        locations_attributes: [:id, :address, :city, :state, :pincode, :_destroy])
   end
 
 end

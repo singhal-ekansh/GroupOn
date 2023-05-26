@@ -12,14 +12,14 @@
         <p class="card-text"><strong>Price: </strong>$<%= deal.price %></p>
         <p class="card-text"><strong>Available: </strong><%= deal.total_availaible %></p>
         <div class="row">
-          <div class="col">
+          <div class="col-auto">
             <%= link_to "View Details", admin_deal_path(deal), class: "btn btn-primary" %>
           </div>
-          <div class="col">
+          <div class="col-auto">
             <%= link_to "Edit Deal", edit_admin_deal_path(deal), class: "btn btn-primary" %>
           </div>
-          <div class="col">
-            <a href="<%= edit_admin_deal_path(deal) %>" class="btn btn-primary">Edit Deal</a>
+          <div class="col-auto">
+            <%=button_to "Delete Deal", admin_deal_path(deal), method: :delete , class: "btn btn-danger" %>
           </div>
         </div>
       </div>
