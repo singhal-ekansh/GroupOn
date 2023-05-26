@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
+    reset_session
     redirect_to new_session_url, notice: 'logged out successfully'
   end
 

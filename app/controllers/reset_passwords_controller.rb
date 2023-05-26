@@ -1,4 +1,6 @@
 class ResetPasswordsController < ApplicationController
+  skip_before_action :authentication_required
+  before_action :already_authenticated
   def new
   end
 
