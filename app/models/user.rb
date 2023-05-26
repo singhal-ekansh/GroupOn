@@ -8,10 +8,10 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  after_create :generate_verify_token
-  after_create_commit :send_verification_email
+  after_create :generate_verify_token, unless: :is_admin?
+  after_create_commit :send_verification_email, unless: :is_admin?
 
-  scope :verified_users, -> { where.not(verified_at: nil) }
+  scope :verified, -> { where.not(verified_at: nil) }
   
   def generate_verify_token
     @token = signed_id(purpose: 'email_verification', expires_in: VERIFY_EXPIRE_TIME)
@@ -22,11 +22,15 @@ class User < ApplicationRecord
   end
 
   def send_verification_email
-    UserMailer.email_verification(self, @token).deliver_later unless is_admin
+    UserMailer.email_verification(self, @token).deliver_later
   end
 
   def send_reset_password_mail(token)
     UserMailer.reset_password(self, token).deliver_later
+  end
+
+  def is_admin?
+    self.is_admin
   end
 
 end

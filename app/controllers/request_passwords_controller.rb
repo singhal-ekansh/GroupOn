@@ -6,7 +6,7 @@ class RequestPasswordsController < ApplicationController
 
 # sends reset link
   def create
-    if User.verified_users.include?(@user)
+    if User.verified.include?(@user)
       @user.send_reset_password_mail(@token)
       redirect_to root_url, notice: 'reset password link is sent to your email'
     else

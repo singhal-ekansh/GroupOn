@@ -7,8 +7,7 @@ class ResetPasswordsController < ApplicationController
     if @user.update(password: params[:password], password_confirmation: params[:password_confirmation])
       redirect_to new_session_url, notice: 'password has been reset successfully. Login to continue'
     else
-      # handle if password and confirm not matched
-      flash.now[:alert] = 'password did not match'
+      flash.now[:alert] = 'something went wrong'
       render :new
     end
 
