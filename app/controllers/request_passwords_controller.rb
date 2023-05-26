@@ -1,6 +1,6 @@
 class RequestPasswordsController < ApplicationController
-  skip_before_action :authentication_required
-  before_action :already_authenticated
+  skip_before_action :authentication
+  before_action :anonymous_user_only
   before_action :set_user, only: [:create]
   before_action :generate_token, only: [:create]
   def new

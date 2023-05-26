@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 
-  before_action :already_authenticated, except: [:destroy]
-  skip_before_action :authentication_required
+  before_action :anonymous_user_only, except: [:destroy]
+  skip_before_action :authentication
 
   def new
   end

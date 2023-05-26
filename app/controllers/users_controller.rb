@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
-  before_action :already_authenticated
-  skip_before_action :authentication_required
+  before_action :anonymous_user_only
+  skip_before_action :authentication
 
   def new
     @user = User.new
