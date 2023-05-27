@@ -12,6 +12,10 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:create, :new, :destroy]
 
+  resources :deals, only: [:index, :show] do 
+    post 'like'
+  end   
+
   namespace :admin do
     resources :deals do
       member do 

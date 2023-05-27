@@ -1,0 +1,52 @@
+<div class="card my-3 mx-3 bg-light shadow">
+  <div class="row no-gutters">
+    <% if !deal.deal_images.empty? && deal.deal_images[0].file.attached? %>
+    <div class="col-md-2 d-flex align-items-center">
+      <%= image_tag deal.deal_images[0].file, class: "card-img img-fluid img-fixed-size mb-0" %>
+    </div>
+    <% end %>
+    <div class="col-md-8">
+      <div class="card-body text-dark">
+        <h5 class="card-title"><%= deal.title %></h5>
+        <p class="card-text text-truncate"><%= deal.description %></p>
+        <p class="card-text"><strong>Price: </strong>$<%= deal.price %></p>
+        <p class="card-text"><strong>Available: </strong><%= deal.total_availaible %></p>
+      
+        <div class="row">
+          <div class="col-auto">
+            <%= link_to "View Details", deal_path(deal), class: "btn btn-primary" %>
+          </div>
+          <% @like_value = deal.likes.find_by(user_id: @current_user)&.liked %>
+          <div class="col-auto">
+            <%= button_to deal_like_path(deal, value: true) do %>
+              <% if @like_value == nil %>
+                <%= image_tag ("like_empty.svg") , size: "20x20"%>
+              <% else %>  
+                <%= image_tag (@like_value ? "like_filled.svg" : "like_empty.svg") , size: "20x20"%>
+              <%end%>
+            <%end%>
+          </div>
+          <div class="col-auto">
+            <%= button_to deal_like_path(deal, value: false) do %>
+              <% if @like_value == nil %>
+                <%= image_tag ("dislike_empty.svg") , size: "20x20"%>
+              <% else %>  
+                <%= image_tag (@like_value ? "dislike_empty.svg" : "dislike_filled.svg") , size: "20x20"%>
+              <%end%>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .img-fixed-size {
+    height: 200px; /* Set the desired height for the image */
+    width: 100%; /* Set the width to fill the container */
+    
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 0; /* Remove bottom margin */
+  }
+</style>
