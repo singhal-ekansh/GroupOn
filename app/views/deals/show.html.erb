@@ -1,0 +1,64 @@
+<div class="container">
+ <div class="d-flex justify-content-center my-5">
+    <% @deal.deal_images.each_with_index do |image, index| %>
+      <div class="image-sliderfade">
+        <%= image_tag image.file, size: "800x300" %>
+      </div>
+    <% end %>
+  </div>
+  
+  
+  <div class="deal-info mt-3">
+    <h3><%= @deal.title %></h3>
+    <div class="deal-attribute">
+      <strong>Description:</strong>
+      <p><%= @deal.description %></p>
+    </div>
+    <div class="deal-attribute">
+      <strong>Price:</strong>
+      <p>$<%= @deal.price %></p>
+    </div>
+    <div class="deal-attribute">
+      <strong>Available:</strong>
+      <p><%= @deal.total_availaible %></p>
+    </div>
+    <div class="deal-attribute">
+      <strong>Start Date:</strong>
+      <p><%= @deal.start_at.strftime("%Y-%m-%d %H:%M") %></p>
+    </div>
+    <div class="deal-attribute">
+      <strong>Expiration Date:</strong>
+      <p><%= @deal.expire_at.strftime("%Y-%m-%d %H:%M") %></p>
+    </div>
+    <!-- Add more attributes as needed -->
+  </div>
+</div>
+
+<script>
+  var slideIndex = 0;
+  showSlides(); // call showslide method
+    
+  function showSlides()
+  {
+      var i;
+      // get the array of divs' with classname image-sliderfade
+      var slides = document.getElementsByClassName("image-sliderfade"); 
+      for (i = 0; i < slides.length; i++) {
+          // initially set the display to 
+          // none for every image.
+          slides[i].style.display = "none"; 
+      }
+      // increase by 1, Global variable
+      slideIndex++; 
+    
+      // check for boundary
+      if (slideIndex > slides.length) 
+      {
+          slideIndex = 1;
+      }
+    
+      slides[slideIndex - 1].style.display = "block";
+      // Change image every 2 seconds
+      setTimeout(showSlides, 4000); 
+  }
+</script>

@@ -11,12 +11,8 @@ class Deal < ApplicationRecord
   has_many :locations, dependent: :destroy
   accepts_nested_attributes_for :locations, allow_destroy: true
   accepts_nested_attributes_for :deal_images, allow_destroy: true
+  has_many :likes, dependent: :destroy
 
-  before_create :set_count_left
-
-  private def set_count_left
-    self.count_left = total_availaible
-  end
 
   private def verify_publisher_admin_only
     unless User.find_by(id: user_id)&.is_admin

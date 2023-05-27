@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_24_111154) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_27_052133) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,22 +40,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_111154) do
   end
 
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "deals", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title", null: false
-    t.text "description", null: false
-    t.integer "price", null: false
-    t.datetime "start_at", null: false
-    t.datetime "expire_at", null: false
-    t.integer "threshold_value", null: false
-    t.integer "total_availaible", null: false
+    t.text "description"
+    t.integer "price"
+    t.datetime "start_at"
+    t.datetime "expire_at"
+    t.integer "threshold_value"
+    t.integer "total_availaible"
     t.integer "max_per_user"
     t.boolean "published", default: false
-    t.integer "count_left"
+    t.integer "qty_sold", default: 0
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -70,6 +70,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_111154) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deal_id"], name: "index_images_on_deal_id"
+  end
+
+  create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "deal_id"
+    t.bigint "user_id"
+    t.boolean "liked"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deal_id"], name: "index_likes_on_deal_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "locations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

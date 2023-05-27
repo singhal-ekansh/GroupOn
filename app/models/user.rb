@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_secure_password
   has_many :deals
+  has_many :likes, dependent: :destroy
 
   after_create_commit :send_verification_email
 
