@@ -40,11 +40,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_123602) do
   end
 
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-<<<<<<< HEAD
-    t.string "name"
-=======
     t.string "name", null: false
->>>>>>> main
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
