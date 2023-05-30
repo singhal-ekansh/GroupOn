@@ -1,10 +1,11 @@
 class DealsController < ApplicationController
 
   def index
-    @deals = Deal.includes(:likes)
+    @deals = Deal.includes(:likes, :deal_images)
   end
 
   def show
+    @deal = Deal.find_by(id: params[:id])
   end
 
   def like
