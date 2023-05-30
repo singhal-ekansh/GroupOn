@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :anonymous_user_only
-  skip_before_action :authentication
+  before_action :ensure_anonymous
 
   def new
     @user = User.new
