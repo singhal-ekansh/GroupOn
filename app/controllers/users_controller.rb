@@ -1,17 +1,13 @@
 class UsersController < ApplicationController
-
-  before_action :already_authenticated, only: [:new, :create]
-  skip_before_action :authentication_required,  except: [:show, :edit, :update]
-
-  before_action :already_authenticated
-  skip_before_action :authentication_required
+  before_action :authenticate, only: [:show, :edit, :update]
+  before_action :ensure_anonymous, except: [:show, :edit, :update]
 
   def new
     @user = User.new
   end
 
   def show
-    @user = User.find_by(id: session[:user_id])
+    @user = current_user
   end
 
   def create
@@ -26,6 +22,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+<<<<<<< HEAD
     @user = User.find_by(id: session[:user_id])
   end
 
@@ -33,6 +30,14 @@ class UsersController < ApplicationController
     debugger
     @user = User.find_by(id: session[:user_id])
     if @user.update(user_params)
+=======
+    @user = current_user
+  end
+
+  def update
+    @user = current_user
+    if @user&.update(user_params)
+>>>>>>> active_storage_and_profile
       redirect_to @user, notice: "Profile updated"
     else
       render :edit
@@ -43,6 +48,8 @@ class UsersController < ApplicationController
   def verify_user
     token = params[:token]
     user = User.find_signed!(token, purpose: 'email_verification')
+    redirect_back(fallback: root_url) and return if user.verified_at
+
     if user.update(verified_at: Time.now)
       redirect_to new_session_url, notice: 'email verified, login to continue'
     else
@@ -53,10 +60,8 @@ class UsersController < ApplicationController
     redirect_to new_session_url, alert: 'email verify link expired'
   end
 
-
-  private 
-
-  def user_params
+ 
+  private def user_params
     params.require(:user).permit(:first_name, :last_name, :password, :password_confirmation, :email)
   end
 end

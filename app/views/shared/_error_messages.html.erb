@@ -1,11 +1,13 @@
-<% if form.object&.errors&.any? %>
-<div class="alert alert-danger">
-  <div id="error_explanation">
-    <ul>
-      <% form.object.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-      <% end %>
-    </ul>
+<% if object&.errors&.any? %>
+  <div class="alert alert-danger">
+    <div id="error_explanation">
+      <ul>
+        <% object.errors.full_messages.each do |message| %>
+          <li>
+            <%= message %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
-</div>
 <% end %>
