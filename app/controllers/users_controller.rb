@@ -22,22 +22,12 @@ class UsersController < ApplicationController
   end
 
   def edit
-<<<<<<< HEAD
-    @user = User.find_by(id: session[:user_id])
-  end
-
-  def update
-    debugger
-    @user = User.find_by(id: session[:user_id])
-    if @user.update(user_params)
-=======
     @user = current_user
   end
 
   def update
     @user = current_user
     if @user&.update(user_params)
->>>>>>> active_storage_and_profile
       redirect_to @user, notice: "Profile updated"
     else
       render :edit

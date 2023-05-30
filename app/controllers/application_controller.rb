@@ -19,15 +19,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-<<<<<<< HEAD
-  def already_authenticated
-    if current_user
-      redirect_to user_url(session[:user_id]), alert: 'Already logged in'
-=======
   private def ensure_anonymous
     if signed_in?
       redirect_back fallback_location: (request.referrer || root_url) , alert: 'Already logged in'
->>>>>>> active_storage_and_profile
     end
   end
 end
