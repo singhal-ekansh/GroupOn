@@ -1,5 +1,8 @@
 class SessionsController < ApplicationController
 
+  before_action :ensure_anonymous, except: [:destroy]
+  before_action :authenticate, only: [:destroy]
+
   def new
   end
 
@@ -12,6 +15,11 @@ class SessionsController < ApplicationController
     else
       redirect_to new_session_url, alert: "Invalid user/password combination"
     end
+  end
+
+  def destroy
+    reset_session
+    redirect_to new_session_url, notice: 'logged out successfully'
   end
 
 end

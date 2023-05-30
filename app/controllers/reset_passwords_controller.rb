@@ -1,4 +1,5 @@
 class ResetPasswordsController < ApplicationController
+  before_action :ensure_anonymous
   def new
   end
 

@@ -1,5 +1,4 @@
 class RequestPasswordsController < ApplicationController
-
   def new
   end
 
