@@ -1,6 +1,4 @@
-<%= stylesheet_link_tag "login_form"%>
 <div class="signup-form">
-  <%= render partial: "shared/alert_message"%>
   <h2>Recover</h2>
   <p class="hint-text">
     Enter your email address, a password recovery link will be sent to you.
@@ -8,16 +6,14 @@
 
   <%= form_with url: request_passwords_url do |form|%>
 
-  <div class="form-group">
-    <%= form.email_field :email , class: "form-control", placeholder: "email",
-    required: true %>
-  </div>
-
-  <center>
     <div class="form-group">
-      <%= form.submit "send reset link" , class: "btn btn-success btn-lg
-      btn-block" %>
+      <%= form.email_field :email , class: "form-control", placeholder: "email", required: true %>
     </div>
-  </center>
+
+    <center>
+      <div class="form-group">
+        <%= form.submit "send reset link" , class: "btn btn-success btn-lg btn-block" %>
+      </div>
+    </center>
   <%end%>
 </div>

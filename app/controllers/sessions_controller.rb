@@ -1,28 +1,24 @@
 class SessionsController < ApplicationController
 
-  before_action :already_authenticated, except: [:destroy]
-  skip_before_action :authentication_required
+  before_action :ensure_anonymous, except: [:destroy]
+  before_action :authenticate, only: [:destroy]
 
   def new
   end
 
   def create
-    user = User.find_by(email: params[:email])
+    user = User.verified.find_by(email: params[:email])
     
     if user&.authenticate(params[:password])
-      unless user.verified_at
-        redirect_to new_session_url, alert: "email not verified, click on the link sent to your email"
-      else
-        session[:user_id] = user.id
+      session[:user_id] = user.id
       # redirect_to //TODO
-      end
     else
       redirect_to new_session_url, alert: "Invalid user/password combination"
     end
   end
 
   def destroy
-    session[:user_id] = nil
+    reset_session
     redirect_to new_session_url, notice: 'logged out successfully'
   end
 

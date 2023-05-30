@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_17_074729) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_26_123602) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,28 +40,51 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_17_074729) do
   end
 
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+<<<<<<< HEAD
     t.string "name"
+=======
+    t.string "name", null: false
+>>>>>>> main
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "deals", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title", null: false
-    t.text "description", null: false
-    t.integer "price", null: false
-    t.datetime "start_at", null: false
-    t.datetime "expire_at", null: false
-    t.integer "threshold_value", null: false
-    t.integer "total_availaible", null: false
+    t.text "description"
+    t.integer "price"
+    t.datetime "start_at"
+    t.datetime "expire_at"
+    t.integer "threshold_value"
+    t.integer "total_availaible"
     t.integer "max_per_user"
     t.boolean "published", default: false
-    t.integer "count_left"
+    t.integer "qty_sold", default: 0
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id"
     t.index ["category_id"], name: "index_deals_on_category_id"
     t.index ["user_id"], name: "index_deals_on_user_id"
+  end
+
+  create_table "images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "type"
+    t.bigint "deal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deal_id"], name: "index_images_on_deal_id"
+  end
+
+  create_table "locations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "address", null: false
+    t.string "state", null: false
+    t.string "city", null: false
+    t.string "pincode", null: false
+    t.bigint "deal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deal_id"], name: "index_locations_on_deal_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -81,4 +104,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_17_074729) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "deals", "categories"
   add_foreign_key "deals", "users"
+  add_foreign_key "images", "deals"
+  add_foreign_key "locations", "deals"
 end
