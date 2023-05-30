@@ -2,10 +2,11 @@ class ApplicationController < ActionController::Base
 
 
   private def current_user
-    if !@current_user && session[:user_id]
-      @current_user = User.verified.find_by(id: session[:user_id])
+    if session[:user_id]
+      @current_user ||= User.verified.find_by(id: session[:user_id])
+    else
+      nil
     end
-    @current_user
   end
 
   private def signed_in?
