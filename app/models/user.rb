@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  validates :first_name, :lastname, presence: true
+  validates :first_name, :last_name, presence: true
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :email, format: {
     with: URI::MailTo::EMAIL_REGEXP,
@@ -7,4 +7,35 @@ class User < ApplicationRecord
   }, allow_blank: true
 
   has_secure_password
+
+  after_create :generate_verify_token, unless: :is_admin?
+  after_create_commit :send_verification_email, unless: :is_admin?
+
+  scope :verified, -> { where.not(verified_at: nil) }
+  
+  def generate_verify_token
+    @token = signed_id(purpose: 'email_verification', expires_in: VERIFY_EXPIRE_TIME)
+  end
+
+  def generate_reset_password_token
+    @token = signed_id(purpose: 'reset_password', expires_in: RESET_EXPIRE_TIME)
+  end
+
+  def send_verification_email
+    UserMailer.email_verification(self, @token).deliver_later
+  end
+
+  def send_reset_password_mail
+    UserMailer.reset_password(self, @token).deliver_later
+  end
+
+  def create_reset_password_mail
+    generate_reset_password_token
+    send_reset_password_mail
+  end
+
+  def is_admin?
+    self.is_admin
+  end
+
 end
