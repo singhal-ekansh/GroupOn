@@ -1,7 +1,7 @@
 class DealsController < ApplicationController
 
   def index
-    @deals = Deal.includes(:likes, :deal_images)
+    @deals = Deal.published.includes(:likes, :deal_images)
   end
 
   def show

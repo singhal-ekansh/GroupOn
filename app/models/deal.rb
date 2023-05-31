@@ -23,6 +23,8 @@ class Deal < ApplicationRecord
   before_validation :check_if_deal_can_be_updated?, on: :update, if: -> { published_was }
   before_destroy :check_if_deal_can_be_deleted?
 
+  scope :published, -> { where(published: true) }
+  
   private def check_if_deal_can_be_updated?
     if start_at_was <= Date.today
       errors.add(:base, 'Live and expired deals can not be updated')
