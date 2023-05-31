@@ -9,8 +9,16 @@
       <div class="card-body text-dark">
         <h5 class="card-title"><%= deal.title %></h5>
         <p class="card-text text-truncate"><%= deal.description %></p>
-        <p class="card-text"><strong>Price: </strong>$<%= deal.price %></p>
-        <p class="card-text"><strong>Available: </strong><%= deal.total_availaible %></p>
+       <div class="row">
+          <p class="card-text col-auto"><strong>Price Per Deal: </strong>Rs<%= deal.price %></p>
+          <p class="card-text col-auto"><strong>Deal To Go Through: </strong><%= deal.threshold_value %></p>
+          <p class="card-text col-auto"><strong>Max Deals Per User: </strong><%= deal.max_per_user %></p>
+        </div>
+        <div class="row">
+          <p class="card-text col-auto"><strong>Total Available: </strong><%= deal.total_availaible - deal.qty_sold%></p>      
+          <p class="card-text col-auto"><strong>Valid From: </strong><%= deal.start_at.to_date.to_s %></p>      
+          <p class="card-text col-auto"><strong>Valid Till: </strong><%= deal.expire_at.to_date.to_s %></p>         
+        </div>
       
         <div class="row">
           <div class="col-auto">

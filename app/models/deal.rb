@@ -22,6 +22,8 @@ class Deal < ApplicationRecord
   
   before_validation :ensure_live_expired_deals_updation, on: :update
 
+  scope :published, -> { where(published: true) }
+
   private def ensure_live_expired_deals_updation
     if start_at_was <= Date.today
       errors.add(:base, 'Live and expired deals can not be updated')
