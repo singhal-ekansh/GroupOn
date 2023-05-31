@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema[7.0].define(version: 2023_05_24_111154) do
-=======
-ActiveRecord::Schema[7.0].define(version: 2023_05_27_052133) do
->>>>>>> locations_model
+ActiveRecord::Schema[7.0].define(version: 2023_05_26_123602) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false

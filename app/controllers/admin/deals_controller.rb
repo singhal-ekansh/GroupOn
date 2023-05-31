@@ -1,9 +1,9 @@
 class Admin::DealsController < ApplicationController
-
+  before_action :authenticate
   def new
     @deal = Deal.new
     @deal.locations.build
-    @deal.deal_images.build
+    # @deal.deal_images.build
   end
 
   def edit
@@ -16,13 +16,12 @@ class Admin::DealsController < ApplicationController
 
   def index
     
-    @deals = Deal.includes(:deal_images).where(user_id: session[:user_id])
+    @deals = Deal.includes(:deal_images).where(user_id: current_user.id)
 
   end
 
   def create
-    debugger
-    @user = User.find(session[:user_id])
+    @user = current_user
 
     @deal = @user.deals.build(deal_params)
     
@@ -36,7 +35,6 @@ class Admin::DealsController < ApplicationController
   end
 
   def update
-    debugger
     @deal = Deal.find(params[:id])
   
     if @deal.update(deal_params)
