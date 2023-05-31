@@ -1,20 +1,27 @@
 class ApplicationController < ActionController::Base
 
-  before_action :authentication_required
 
-  def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
+  private def current_user
+    if session[:user_id]
+      @current_user ||= User.verified.find_by(id: session[:user_id])
+    else
+      nil
+    end
   end
 
-  def authentication_required
-    unless current_user
+  private def signed_in?
+    !!current_user
+  end
+
+  private def authenticate
+    if !signed_in?
       redirect_to new_session_url, alert: 'Login to continue'
     end
   end
 
-  def already_authenticated
-    if current_user
-      redirect_to user_url(session[:user_id]), alert: 'Already logged in'
+  private def ensure_anonymous
+    if signed_in?
+      redirect_back fallback_location: (request.referrer || root_url) , alert: 'Already logged in'
     end
   end
 end

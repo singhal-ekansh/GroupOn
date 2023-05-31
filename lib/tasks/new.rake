@@ -1,25 +1,28 @@
 namespace :admin do
   task :new => :environment do
     print "enter first name: "
-    first = STDIN.gets.chomp
+    first = get_input
     print "enter last name: "
-    last = STDIN.gets.chomp
+    last = get_input
     print "enter email address: "
-    email = STDIN.gets.chomp
+    email = get_input
     print "enter password: "
-    password = STDIN.gets.chomp
+    password = get_input
     print "confirm password: "
-    confirm = STDIN.gets.chomp
+    confirm = get_input
     
-    u = User.create(first_name: first, last_name: last, email: email,
+    user = User.new(first_name: first, last_name: last, email: email,
         password: password, password_confirmation: confirm, is_admin: true, 
         verified_at: Time.now)
     
-    if u.persisted?
+    if user.save
       p "admin created"
     else
-      p u.errors.to_a
+      p user.errors.full_messages.to_sentence
     end
   end
 
+  def get_input
+    STDIN.gets.chomp
+  end
 end
