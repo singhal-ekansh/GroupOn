@@ -1,12 +1,7 @@
 class UsersController < ApplicationController
-<<<<<<< HEAD
 
-  before_action :already_authenticated, only: [:new, :create]
-  skip_before_action :authentication_required,  except: [:show, :edit, :update]
-=======
   before_action :authenticate, only: [:show, :edit, :update]
   before_action :ensure_anonymous, except: [:show, :edit, :update]
->>>>>>> locations_model
 
   def new
     @user = User.new

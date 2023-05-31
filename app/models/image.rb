@@ -5,6 +5,6 @@ class Image < ApplicationRecord
 
 
   def file_validations
-    errors.add(:base, "image must be present") unless file.attached?
+    errors.add(:file, "image must be present") unless file.attached?
   end
 end
