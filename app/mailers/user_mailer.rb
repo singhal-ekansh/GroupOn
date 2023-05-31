@@ -1,12 +1,12 @@
 class UserMailer < ApplicationMailer
-  default from: "from@example.com"
-  def email_verification(user)
-    @token = user.generate_verify_token
+  default from: DEFAULT_MAIL
+  def email_verification(user, token)
+    @token = token
     mail to: user.email, subject: 'GroupOn register verification'
   end
 
-  def reset_password(user)
-    @token = user.generate_reset_password_token
+  def reset_password(user, token)
+    @token = token
     mail to: user.email, subject: 'GroupOn account recovery'
   end
 end

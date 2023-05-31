@@ -83,10 +83,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_27_052133) do
   end
 
   create_table "locations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "address", null: false
-    t.string "state", null: false
-    t.string "city", null: false
-    t.string "pincode", null: false
+    t.string "address"
+    t.string "state"
+    t.string "city"
+    t.string "pincode"
     t.bigint "deal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
