@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
   resources :deals, only: [:index, :show] do 
     post 'like'
+    get "search", on: :collection
+    get "filter", on: :collection
   end   
 
   namespace :admin do
