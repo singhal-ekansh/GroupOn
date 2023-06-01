@@ -21,4 +21,19 @@ class DealsController < ApplicationController
     redirect_to deals_path
       
   end
+
+  def search
+    query = "%#{params[:query]}%"
+    @deals = Deal.published.joins(:locations).where("title LIKE ? OR locations.city LIKE ?", query, query)
+    render "index"
+  end
+
+  def filter
+    if params[:category].blank?
+      @deals = Deal.published     
+    else
+      @deals = Deal.published.where(category_id: params[:category])
+    end
+    render "index"
+  end
 end

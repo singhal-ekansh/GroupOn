@@ -1,2 +1,27 @@
 <center><h1>ALL DEALS</h1></center>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-auto">
+      <%= form_with url: search_deals_path, method: :get do |f| %>
+        <div class="input-group">
+          <div class="form-outline">
+            <%= f.text_field :query,value: params[:query], class: "form-control", type: "search" %>
+          </div>
+          <%= f.submit "Search", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-auto">
+      <%= form_with url: filter_deals_path, method: :get do |f| %>
+        <div class="input-group">
+          <%= f.collection_select :category, Category.all, :id, :name, prompt: "All Category", selected: params[:category] %>
+          <%= f.submit "Filter", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
 <%=render @deals%>
