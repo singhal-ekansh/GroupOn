@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_31_140159) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_02_073201) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -97,13 +97,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_31_140159) do
     t.integer "quantity"
     t.integer "amount"
     t.datetime "processed_at"
-    t.integer "status"
+    t.integer "status", default: 1
     t.bigint "deal_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deal_id"], name: "index_orders_on_deal_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "transactions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "stripe_id"
+    t.bigint "order_id"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_transactions_on_order_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

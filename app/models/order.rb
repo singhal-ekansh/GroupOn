@@ -3,6 +3,7 @@ class Order < ApplicationRecord
 
   belongs_to :user
   belongs_to :deal
+  has_many :payment_transactions, class_name: 'Transaction'
 
-  enum :status, [:pending, :delivered, :canceled]
+  enum :status, [:pending, :paid, :processed, :canceled]
 end

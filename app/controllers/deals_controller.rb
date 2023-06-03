@@ -1,5 +1,7 @@
 class DealsController < ApplicationController
 
+  before_action :authenticate
+
   def index
     @deals = Deal.published.includes(:likes, :deal_images)
   end
