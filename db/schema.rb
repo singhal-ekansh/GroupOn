@@ -97,7 +97,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_02_073201) do
     t.integer "quantity"
     t.integer "amount"
     t.datetime "processed_at"
-    t.integer "status", default: 1
+    t.integer "status", default: 0
     t.bigint "deal_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
