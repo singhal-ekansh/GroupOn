@@ -9,7 +9,6 @@ class Order < ApplicationRecord
   enum :status, [:pending, :paid, :processed, :canceled]
 
   def deal_validations
-    debugger
     errors.add(:quantity, 'exceed more than availaible deals') if quantity > (deal.total_availaible - deal.qty_sold)
     errors.add(:base, 'order can be placed only for published deals') unless deal.published
     errors.add(:base, 'order can be placed only for live deals') unless Time.now.between?(deal.start_at, deal.expire_at)

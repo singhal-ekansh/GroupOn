@@ -6,8 +6,11 @@ class OrdersController < ApplicationController
     @deal = Deal.find_by(id: params[:deal_id])
   end
 
+  def index
+    @orders = Order.where(user: current_user).order(created_at: :desc)
+  end
+
   def create
-    debugger
     @deal = Deal.find_by(id: params[:deal_id])
     @order = Order.new(deal_id: params[:deal_id], user_id:  current_user.id, quantity: params[:order][:quantity],amount: params[:order][:quantity].to_i * @deal.price)
 
@@ -31,11 +34,10 @@ class OrdersController < ApplicationController
     @order = Order.find_by(id: @checkout_session.metadata[:order_id])
     @order.payment_transactions.create( stripe_id: @checkout_session.payment_intent, order_id: @order.id, status: :paid )
     @order.update(status: :paid)
-    redirect_to deals_path, notice: "Order placed"
+    redirect_to orders_path, notice: "Order placed"
   end
 
   def failed
-    debugger
     @checkout_session = Stripe::Checkout::Session.retrieve(session[:checkout_session])
     @order = Order.find_by(id: @checkout_session.metadata[:order_id])
     @deal = @order.deal

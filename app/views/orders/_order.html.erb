@@ -1,0 +1,10 @@
+<div class="order card bg-white shadow mx-5 my-3">
+  <div class="card-body text-dark">
+    <h5 class="card-title"><strong><%= order.deal.title %></strong></h5>
+    <br>
+    <p class="card-text"><strong>Total:</strong> Rs <%= order.amount %></p>
+    <p class="card-text"><strong>Quantity:</strong> <%= order.quantity %></p>
+    <p class="card-text"><strong>Status: </strong><%= order.status %></p>
+    <p class="card-text"><strong>Placed On:</strong> <%= order.created_at.to_date %></p>
+  </div>
+</div>
