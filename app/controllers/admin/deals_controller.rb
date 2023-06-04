@@ -1,5 +1,7 @@
 class Admin::DealsController < ApplicationController
   before_action :authenticate
+  before_action :ensure_admin
+  
   def new
     @deal = Deal.new
     @deal.locations.build
@@ -7,35 +9,30 @@ class Admin::DealsController < ApplicationController
   end
 
   def edit
-    @deal = Deal.find(params[:id])
+    @deal = Deal.find_by(id: params[:id])
   end
 
   def show
-    @deal = Deal.find(params[:id])
+    @deal = Deal.find_by(id: params[:id])
   end
 
   def index
-    
     @deals = Deal.includes(:deal_images).where(user_id: current_user.id)
-
   end
 
   def create
-    @user = current_user
-
-    @deal = @user.deals.build(deal_params)
+    @deal = current_user.deals.build(deal_params)
     
     if @deal.save
-      redirect_to admin_deal_path(@deal), notice: "deal added successfully"
+      redirect_to admin_deals_path, notice: "new deal added successfully"
     else
       render :new
     end
   
-
   end
 
   def update
-    @deal = Deal.find(params[:id])
+    @deal = Deal.find_by(id: params[:id])
   
     if @deal.update(deal_params)
       redirect_to admin_deal_path(@deal), notice: "deal updated successfully"
@@ -45,14 +42,13 @@ class Admin::DealsController < ApplicationController
   end
 
   def destroy
-    @deal = Deal.find(params[:id])
+    @deal = Deal.find_by(id: params[:id])
 
     if @deal.destroy
       redirect_to admin_deals_path, notice: "deal successfully deleted"
     else
-      debugger
-      flash.now[:alert] = "deal cant be deleted"
-      render 'index'
+      flash.now[:alert] = "deal can't be deleted"
+      render :index
     end
   end
 
