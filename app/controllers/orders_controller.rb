@@ -16,6 +16,7 @@ class OrdersController < ApplicationController
 
     if @order.save
       @deal.update_columns(qty_sold: @deal.qty_sold + @order.quantity)
+      ActionCable.server.broadcast('deals_channel', {deal_id: @deal.id, qty: @deal.total_availaible - @deal.qty_sold })
 
       @checkout_session = Stripe::Checkout::Session.create(success_url: order_success_url, cancel_url: order_failed_url,
         line_items: [{ price_data: { currency: 'inr', unit_amount: @deal.price * 100, product_data: {name: @deal.title} } ,
@@ -42,6 +43,7 @@ class OrdersController < ApplicationController
     @order = Order.find_by(id: @checkout_session.metadata[:order_id])
     @deal = @order.deal
     @deal.update_columns(qty_sold: @deal.qty_sold - @order.quantity)
+    ActionCable.server.broadcast('deals_channel', {deal_id: @deal.id, qty: @deal.total_availaible - @deal.qty_sold })
     @order.payment_transactions.create( stripe_id: @checkout_session.id, order_id: @order.id, status: :failed )
     @order.update(status: :canceled)
     redirect_to deals_path, alert: "payment failed"
