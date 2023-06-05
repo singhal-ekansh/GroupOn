@@ -29,9 +29,7 @@ class ProcessDealOrdersJob < ApplicationJob
   end
 
   private def generate_refund(order)
-    debugger
     refund_object = Stripe::Refund.create( payment_intent: order.payment_transactions.find_by(status: :paid).stripe_id )
-    t = order.payment_transactions.create(stripe_id: refund_object.id, status: :refunded)
-    t.errors.to_a
+    order.payment_transactions.create(stripe_id: refund_object.id, status: :refunded)
   end
 end
