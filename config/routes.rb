@@ -24,6 +24,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :deals
+    resources :reports, only: [:index]
+    post 'filter-deals', to: 'reports#filter_deal'
   end
   root "admin/deals#index"
 end

@@ -8,11 +8,13 @@ class User < ApplicationRecord
 
   has_secure_password
   has_many :deals, dependent: :destroy
+  has_many :orders
 
   after_create :generate_verify_token, unless: :is_admin?
   after_create_commit :send_verification_email, unless: :is_admin?
 
   scope :verified, -> { where.not(verified_at: nil) }
+  scope :most_spenders, -> { joins(:orders).where(orders: { status: :processed }).group(:id).order("sum(orders.amount) desc") }
   
   def generate_verify_token
     @token = signed_id(purpose: 'email_verification', expires_in: VERIFY_EXPIRE_TIME)
