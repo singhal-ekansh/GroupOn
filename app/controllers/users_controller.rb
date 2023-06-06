@@ -27,7 +27,7 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    if @user&.update(user_params)
+    if @user.update(user_params)
       redirect_to @user, notice: "Profile updated"
     else
       render :edit
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
   def verify_user
     token = params[:token]
     user = User.find_signed!(token, purpose: 'email_verification')
-    redirect_back(fallback: root_url) and return if user.verified_at
+    redirect_back(fallback: root_url, alert: 'account already verified') and return if user.verified_at
 
     if user.update(verified_at: Time.now)
       redirect_to new_session_url, notice: 'email verified, login to continue'
