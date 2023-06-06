@@ -14,7 +14,8 @@ class ProcessDealOrdersJob < ApplicationJob
   private def order_success(deal)
     orders = deal.orders
     orders.each do |order|
-      OrderMailer.completed(order).deliver_later
+      order.generate_coupons
+      OrderMailer.completed(order).deliver_now
       order.update_column(:status, :processed)
     end
   end

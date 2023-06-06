@@ -1,7 +1,7 @@
 class OrderMailer < ApplicationMailer
   
   def completed(order)
-    order.generete_coupons
+    @order = order
     mail to: order.user.email, subject: "Deal Order Successfully Completed"
   end
 
