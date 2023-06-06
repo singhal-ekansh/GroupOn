@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  resources :users
+  resources :users, except: [:destroy]
   get "user-verify/:token", to: "users#verify_user", as: "user-verify"
   
   resources :request_passwords, only: [:create, :new]
