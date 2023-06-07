@@ -21,7 +21,8 @@ class OrdersController < ApplicationController
         line_items: [{ price_data: { currency: 'inr', unit_amount: @deal.price * 100, product_data: {name: @deal.title} } ,
            quantity: @order.quantity }], mode: 'payment', metadata: { order_id: @order.id })
        
-      session[:checkout_session] = @checkout_session.id  
+      session[:checkout_session] = @checkout_session.id
+      VerifyPaymentJob.set(wait: 2.minutes).perform_later(@checkout_session.id)
 
       redirect_to @checkout_session.url, allow_other_host: true
     else
