@@ -24,15 +24,15 @@ class DealsController < ApplicationController
 
   def search
     query = "%#{params[:query]}%"
-    @deals = Deal.published.joins(:locations).where("title LIKE ? OR locations.city LIKE ?", query, query)
+    @deals = Deal.published.includes(:likes, :deal_images).joins(:locations).where("title LIKE ? OR locations.city LIKE ?", query, query)
     render "index"
   end
 
   def filter
     if params[:category].blank?
-      @deals = Deal.published     
+      @deals = Deal.published.includes(:likes, :deal_images)    
     else
-      @deals = Deal.published.where(category_id: params[:category])
+      @deals = Deal.published.includes(:likes, :deal_images).where(category_id: params[:category])
     end
     render "index"
   end
