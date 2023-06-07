@@ -18,8 +18,11 @@ class Deal < ApplicationRecord
   has_many :locations, dependent: :destroy
   accepts_nested_attributes_for :locations, allow_destroy: true, reject_if: lambda { |attr| attr.any? { |k,v| k!=false && v.blank? } }
   accepts_nested_attributes_for :deal_images, allow_destroy: true, reject_if: lambda { |attr| !attr.key?('file') }
-
+  has_many :likes, dependent: :destroy
+  
   before_validation :ensure_live_expired_deals_updation, on: :update
+
+  scope :published, -> { where(published: true) }
 
   private def ensure_live_expired_deals_updation
     if start_at_was <= Date.today
