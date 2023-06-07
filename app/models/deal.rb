@@ -12,6 +12,7 @@ class Deal < ApplicationRecord
 
   belongs_to :user
   belongs_to :category
+  has_many :locations, dependent: :destroy
 
   private def ensure_published_by_admin
     unless User.verified.find_by(id: user_id)&.is_admin
