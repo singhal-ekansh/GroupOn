@@ -24,6 +24,9 @@
           <div class="col-auto">
             <%= link_to "View Details", deal_path(deal), class: "btn btn-primary" %>
           </div>
+          <div class="col-auto">
+            <%= link_to "Get Deal", new_deal_order_path(deal), class: "btn btn-success" %>
+          </div>
           <% @like_value = deal.likes.find_by(user_id: @current_user)&.liked %>
           <div class="col-auto">
             <%= button_to deal_like_path(deal, value: true) do %>
