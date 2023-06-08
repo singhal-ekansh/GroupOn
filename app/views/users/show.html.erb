@@ -30,11 +30,20 @@
               <p class="lead fw-normal mb-1">About</p>
               <div class="p-4" style="background-color: #f8f9fa;">
                 <p class="font-italic mb-1"><%= @user.email %></p>
-                <%# <p class="font-italic mb-1"></p>
-                <p class="font-italic mb-0">Photographer</p> %>
               </div>
             </div>
           </div>
+          <% if @user.is_admin %>
+            <div class="card-body p-4 text-black">
+            <div class="mb-4">
+              <p class="lead fw-normal mb-1">Admin Dashboard</p>
+              <div class="p-4" style="background-color: #f8f9fa;">
+                <p class="font-italic mb-1"><%= link_to 'All Deals', admin_deals_path, class: "nav-link" %></p>
+                <p class="font-italic mb-1"><%= link_to 'Reports', admin_reports_path, class: "nav-link" %></p>
+              </div>
+            </div>
+          </div>
+          <% end %>
         </div>
       </div>
     </div>
