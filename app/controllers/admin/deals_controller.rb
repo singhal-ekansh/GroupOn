@@ -1,7 +1,7 @@
 class Admin::DealsController < ApplicationController
   before_action :authenticate
   before_action :ensure_admin
-  before_action :set_deal
+  before_action :set_deal, only: [:edit, :show, :update]
   
   def new
     @deal = Deal.new
