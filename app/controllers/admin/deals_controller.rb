@@ -16,7 +16,7 @@ class Admin::DealsController < ApplicationController
 
   def index
     
-    @deals = Deal.includes(:deal_images).where(user_id: current_user.id)
+    @deals = Deal.includes(:deal_images).where(user_id: current_user.id).paginate(page: params[:page], per_page: DEAL_PER_PAGE)
 
   end
 

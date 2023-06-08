@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order.where(user: current_user).order(created_at: :desc)
+    @orders = Order.where(user: current_user).order(created_at: :desc).paginate(page: params[:page], per_page: ORDER_PER_PAGE)
   end
 
   def create
