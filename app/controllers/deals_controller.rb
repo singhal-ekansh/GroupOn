@@ -3,7 +3,7 @@ class DealsController < ApplicationController
   before_action :authenticate
 
   def index
-    @deals = Deal.published.includes(:likes, :deal_images)
+    @deals = Deal.published.includes(:likes, :deal_images).paginate(page: params[:page], per_page: DEAL_PER_PAGE)
   end
 
   def show
