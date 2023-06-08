@@ -17,7 +17,6 @@ Rails.application.routes.draw do
     post 'like'
     get "search", on: :collection
     get "filter", on: :collection
-  end   
     resources :orders, only: [:new, :create]
   end
 
