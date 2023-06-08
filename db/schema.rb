@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_06_062407) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_08_110932) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -69,7 +69,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_062407) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id"
+    t.bigint "merchant_id"
     t.index ["category_id"], name: "index_deals_on_category_id"
+    t.index ["merchant_id"], name: "index_deals_on_merchant_id"
     t.index ["user_id"], name: "index_deals_on_user_id"
   end
 
@@ -150,6 +152,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_062407) do
     t.datetime "password_last_reset_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

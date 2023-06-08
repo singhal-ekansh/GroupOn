@@ -53,7 +53,7 @@ class Admin::DealsController < ApplicationController
 
   private def deal_params
     params.require(:deal).permit(:title, :description, :threshold_value, :total_availaible, :price, :start_at,
-       :expire_at, :max_per_user, :category_id, :published, deal_images_attributes: [:id, :_destroy, :file],
+       :expire_at, :max_per_user, :category_id, :merchant_id, :published, deal_images_attributes: [:id, :_destroy, :file],
         locations_attributes: [:id, :address, :city, :state, :pincode, :_destroy])
   end
 
