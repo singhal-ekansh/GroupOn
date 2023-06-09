@@ -43,6 +43,16 @@
               </div>
             </div>
           </div>
+          <% elsif @user.merchant? %>
+          <div class="card-body p-4 text-black">
+            <div class="mb-4">
+              <p class="lead fw-normal mb-1">Merchant Dashboard</p>
+              <div class="p-4" style="background-color: #f8f9fa;">
+                <p class="font-italic mb-1"><%= link_to 'My Deals', merchant_deals_path, class: "nav-link" %></p>
+                <p class="font-italic mb-1"><%= link_to 'Redeem Coupons', merchant_redeem_coupons_path, class: "nav-link" %></p>
+              </div>
+            </div>
+          </div>
           <% end %>
         </div>
       </div>

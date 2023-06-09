@@ -30,4 +30,10 @@ class ApplicationController < ActionController::Base
       redirect_to root_path, alert: 'Only admin can access this section'
     end
   end
+
+  private def ensure_merchant
+    if !current_user.merchant?
+      redirect_to root_path, alert: 'Only merchant can access this section'
+    end
+  end
 end

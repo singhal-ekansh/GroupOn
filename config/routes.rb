@@ -30,6 +30,15 @@ Rails.application.routes.draw do
     post 'filter-deals', to: 'reports#filter_deal'
   end
 
+  namespace :merchant do
+    resources :deals, only: [:index, :show] do
+      resources :orders, only: [:index]
+      resources :coupons, only: [:index]
+    end
+    get 'redeem-coupons', to: 'coupons#redeem_coupons'
+    post 'redeem-coupons', to: 'coupons#redeem'
+  end
+
   resources :coupons, only: [:index]
-  root "admin/deals#index"
+  root "deals#index"
 end

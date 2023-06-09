@@ -92,7 +92,7 @@
       <div class="mt-4">
         <div class="form-group">
           <%= form.label :merchant_id, 'Deal Merchant' %>
-          <%= form.select :merchant_id, User.where(role: :merchant).collect { |c| [c.name, c.id] }, { prompt: 'Select One' }, class: 'form-select custom-select-lg' %>
+          <%= form.select :merchant_id, User.where(role: :merchant).collect { |c| ["#{c.first_name} #{c.last_name}", c.id] }, { prompt: 'Select One' }, class: 'form-select custom-select-lg' %>
         </div>
       </div>
 

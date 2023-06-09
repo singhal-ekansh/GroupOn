@@ -1,0 +1,41 @@
+<center><h1>Redeem Coupons</h1></center>
+<%=form_with url: merchant_redeem_coupons_path do |f| %>
+  <%= render partial: "shared/error_messages", locals: {object: f.object} %>
+  <div class="container">
+    <div class="checkout-container">
+      <div class="text-center text-dark">
+        <div class="form-group">
+          <label for="quantity">Enter Code:</label>
+          <%= f.text_field :coupon_code, value: params[:coupon_code], required: true %>
+        </div>
+        <br>
+        <%= f.submit :Redeem, class: "btn btn-primary btn-place-order"%>
+      </div>
+    </div>
+  </div>
+<%end%>  
+
+
+ <style>
+    .checkout-container {
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+      margin-top: 100px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-image {
+      max-width: 200px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .btn-place-order {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+    }
+  </style>

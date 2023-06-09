@@ -1,5 +1,5 @@
 namespace :admin do
-  task :new => :environment do
+  task :new_merchant => :environment do
     print "enter first name: "
     first = get_input
     print "enter last name: "

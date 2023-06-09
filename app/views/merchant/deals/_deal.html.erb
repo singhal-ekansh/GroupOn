@@ -1,0 +1,40 @@
+<div class="card my-3 mx-3 bg-light shadow text-dark" >
+  <div class="row no-gutters">
+    <% if !deal.deal_images.empty? && deal.deal_images[0].file.attached? %>
+    <div class="col-md-2 d-flex align-items-center">
+      <%= image_tag deal.deal_images[0].file, class: "card-img img-fluid img-fixed-size mb-0" %>
+    </div>
+    <% end %>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h3 class="card-title"><%= deal.title %></h3>
+        <p class="card-text text-truncate"><%= deal.description %></p>
+        <div class="row">
+        <p class="card-text col-auto"><strong>Price Per Deal: </strong>Rs<%= deal.price %></p>
+        <p class="card-text col-auto"><strong>Deal To Go Through: </strong><%= deal.threshold_value %></p>
+        <p class="card-text col-auto"><strong>Max Deals Per User: </strong><%= deal.max_per_user %></p>
+        </div>
+        <div class="row">
+        <p class="card-text col-auto"><strong>Total Available: </strong><%= deal.total_availaible%></p>
+         <p class="card-text col-auto"><strong>Quantity Sold: </strong><%= deal.qty_sold %></p>
+         
+        </div>
+        <div class="row">
+          <div class="col-auto">
+            <%= link_to "View Details", merchant_deal_path(deal), class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .img-fixed-size {
+    height: 200px; /* Set the desired height for the image */
+    width: 100%; /* Set the width to fill the container */
+    
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 0; /* Remove bottom margin */
+  }
+</style>
