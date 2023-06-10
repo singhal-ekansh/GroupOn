@@ -1,10 +1,6 @@
 class Image < ApplicationRecord
 
   has_one_attached :file, dependent: :destroy
-  validate :file_validations
 
-
-  def file_validations
-    errors.add(:file, "image must be present") unless file.attached?
-  end
+  validates :file, attached: true, content_type: { in: ALLOWED_IMAGE_TYPES } , size: { less_than: 5.megabytes , message: 'is too large' }
 end
