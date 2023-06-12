@@ -29,7 +29,7 @@
             Top Grossing Deals
           </div>
           <div class="card-body">
-            <%= form_with url: admin_filter_deals_path do |form| %>
+            <%= form_with url: admin_reports_path, method: :get do |form| %>
               <div class="row">
                 <div class="form-group col">
                   <label for="start">Start Date:</label>
