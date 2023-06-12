@@ -25,7 +25,7 @@
           <div class="col-auto">
             <%= link_to "View Details", deal_path(deal), class: "btn btn-primary" %>
           </div>
-          <% @like_value = deal.likes.find_by(user_id: @current_user)&.liked %>
+          <% @like_value = @current_user.likes.find_by(deal: deal)&.liked %>
           <div class="col-auto">
             <%= button_to deal_like_path(deal, value: true) do %>
               <% if @like_value == nil %>
@@ -34,6 +34,7 @@
                 <%= image_tag (@like_value ? "like_filled.svg" : "like_empty.svg") , size: "20x20"%>
               <%end%>
             <%end%>
+            <%=likes_count[deal.id] if likes_count%>
           </div>
           <div class="col-auto">
             <%= button_to deal_like_path(deal, value: false) do %>
@@ -43,6 +44,7 @@
                 <%= image_tag (@like_value ? "dislike_empty.svg" : "dislike_filled.svg") , size: "20x20"%>
               <%end%>
             <%end%>
+            <%=dislikes_count[deal.id] if dislikes_count%>
           </div>
         </div>
       </div>
