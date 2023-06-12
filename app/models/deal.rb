@@ -24,7 +24,7 @@ class Deal < ApplicationRecord
   before_validation :ensure_live_expired_deals_updation, on: :update
 
   scope :published, -> { where(published: true) }
-  scope :most_revenue, -> (start_date = Date.today, end_date = nil) { joins(:orders).where(orders: {status: :processed }).group(:id).order("sum(orders.amount) desc").limit(1) }
+  scope :most_revenue, -> (start_date = Date.today, end_date = nil) { joins(:orders).where(orders: {status: :processed, created_at: (start_date..end_date)}).group(:id, :title).order("sum(orders.amount) desc").sum(:amount) }
   
   private def ensure_live_expired_deals_updation
     if start_at_was <= Date.today
