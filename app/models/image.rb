@@ -1,6 +1,11 @@
 class Image < ApplicationRecord
 
   has_one_attached :file, dependent: :destroy
+  validate :file_validations
 
-  validates :file, attached: true, content_type: { in: ALLOWED_IMAGE_TYPES } , size: { less_than: 5.megabytes , message: 'is too large' }
+  def file_validations
+    errors.add(:image, 'file must be selected') unless file.attached?
+    errors.add(:image, 'must be png or jpg') if file.attached? && !file.blob.content_type.in?(ALLOWED_IMAGE_TYPES)
+    errors.add(:image, 'size too big') if file.attached? && file.blob.byte_size > ALLOWED_IMAGE_SIZE
+  end
 end
