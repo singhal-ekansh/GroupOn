@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag "deal_card"%>
 <div class="card my-3 mx-3 bg-light shadow">
   <div class="row no-gutters">
     <% if !deal.deal_images.empty? && deal.deal_images[0].file.attached? %>
@@ -48,13 +49,3 @@
     </div>
   </div>
 </div>
-
-<style>
-  .img-fixed-size {
-    height: 200px; /* Set the desired height for the image */
-    width: 100%; /* Set the width to fill the container */
-    
-    margin-top: 0; /* Remove top margin */
-    margin-bottom: 0; /* Remove bottom margin */
-  }
-</style>
