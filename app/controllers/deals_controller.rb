@@ -1,5 +1,6 @@
 class DealsController < ApplicationController
   before_action :authenticate
+  before_action :set_deal, only: [:show]
 
   def index
     @deals = Deal.includes(:likes, :deal_images, :locations).published.live
@@ -15,7 +16,6 @@ class DealsController < ApplicationController
   end
 
   def show
-    @deal = Deal.find_by(id: params[:id])
   end
 
   def like
@@ -43,5 +43,10 @@ class DealsController < ApplicationController
     unless params[:category].blank?
       @deals = @deals.where(category_id: params[:category])
     end
+  end
+
+  def set_deal
+    @deal = Deal.find_by(id: params[:id])
+    redirect_to deals_path, alert: 'invalid deal' unless @deal
   end
 end
