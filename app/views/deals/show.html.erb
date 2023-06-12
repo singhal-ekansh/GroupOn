@@ -1,64 +1,101 @@
 <div class="container">
- <div class="d-flex justify-content-center my-5">
+  <div class="d-flex justify-content-center my-5">
     <% @deal.deal_images.each_with_index do |image, index| %>
       <div class="image-sliderfade">
         <%= image_tag image.file, size: "800x300" %>
       </div>
     <% end %>
   </div>
-  
-  
-  <div class="deal-info mt-3">
-    <h3><%= @deal.title %></h3>
-    <div class="deal-attribute">
+
+  <div class="deal-info mt-3 my-4">
+    <center>
+      <h3><%= @deal.title %></h3>
+    </center>
+    <br>
+    <div>
       <strong>Description:</strong>
       <p><%= @deal.description %></p>
     </div>
-    <div class="deal-attribute">
-      <strong>Price:</strong>
-      <p>$<%= @deal.price %></p>
+    <div class="row">
+      <div class="col">
+        <strong>Price:</strong>
+        <p>$<%= @deal.price %></p>
+      </div>
+      <div class="col">
+        <strong>Total Available:</strong>
+        <p><%= @deal.total_availaible - @deal.qty_sold %></p>
+      </div>
+      <div class="col">
+      </div>
     </div>
-    <div class="deal-attribute">
-      <strong>Available:</strong>
-      <p><%= @deal.total_availaible %></p>
+    <div class="row">
+      <div class="col">
+        <strong>Start Date:</strong>
+        <p><%= @deal.start_at.to_date if @deal.start_at %></p>
+      </div>
+      <div class="col">
+        <strong>Expiration Date:</strong>
+        <p><%= @deal.expire_at.to_date if @deal.expire_at %></p>
+      </div>
+      <div class="col">
+        <strong>Status:</strong>
+        <p><%= @deal.published ? 'Published' : 'Draft' %></p>
+      </div>
     </div>
-    <div class="deal-attribute">
-      <strong>Start Date:</strong>
-      <p><%= @deal.start_at.strftime("%Y-%m-%d %H:%M") %></p>
+
+    <div class="row">
+      <div class="col">
+        <strong>Threshold Value:</strong>
+        <p><%= @deal.threshold_value %></p>
+      </div>
+      <div class="col">
+        <strong>Max per user:</strong>
+        <p><%= @deal.max_per_user %></p>
+      </div>
+
+      <div class="col">
+      </div>
     </div>
-    <div class="deal-attribute">
-      <strong>Expiration Date:</strong>
-      <p><%= @deal.expire_at.strftime("%Y-%m-%d %H:%M") %></p>
+
+    <div>
+      <strong>Locations:</strong>
+      <br><br>
+      <% @deal.locations.each do |location| %>
+        <div class="row">
+          <div class="col">
+            <strong>Address:</strong>
+            <p><%= location.address %></p>
+          </div>
+        </div>  
+        <div class="row">
+          <div class="col">
+            <strong>Country:</strong>
+            <p><%= location.country %></p>
+          </div> 
+          <div class="col">
+            <strong>State:</strong>
+            <p><%= location.state %></p>
+          </div> 
+          <div class="col">
+            <strong>City:</strong>
+            <p><%= location.city %></p>
+          </div>
+          <div class="col">
+            <strong>Pincode:</strong>
+            <p><%= location.pincode %></p>
+          </div>  
+        </div>
+        <hr>
+      <% end %>
     </div>
-    <!-- Add more attributes as needed -->
+    <br>
+    <div class="row">
+      <div class="col">
+        <%= link_to "Get Deal", "#", class: "btn btn-success" %>
+      </div>
+
+      </div>
+    </div>
   </div>
 </div>
-
-<script>
-  var slideIndex = 0;
-  showSlides(); // call showslide method
-    
-  function showSlides()
-  {
-      var i;
-      // get the array of divs' with classname image-sliderfade
-      var slides = document.getElementsByClassName("image-sliderfade"); 
-      for (i = 0; i < slides.length; i++) {
-          // initially set the display to 
-          // none for every image.
-          slides[i].style.display = "none"; 
-      }
-      // increase by 1, Global variable
-      slideIndex++; 
-    
-      // check for boundary
-      if (slideIndex > slides.length) 
-      {
-          slideIndex = 1;
-      }
-    
-      slides[slideIndex - 1].style.display = "block";
-      // Change image every 2 seconds
-      setTimeout(showSlides, 4000); 
-  }
-</script>
+<%= javascript_include_tag 'image_slider' %>

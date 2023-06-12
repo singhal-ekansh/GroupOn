@@ -1,41 +1,35 @@
-class Admin::DealsController < ApplicationController
-  before_action :authenticate
+class Admin::DealsController < Admin::AdminBaseController
+  before_action :set_deal, only: [:edit, :show, :update]
+  
   def new
     @deal = Deal.new
     @deal.locations.build
-    # @deal.deal_images.build
+    @deal.deal_images.build
   end
 
   def edit
-    @deal = Deal.find(params[:id])
   end
 
   def show
-    @deal = Deal.find(params[:id])
   end
 
   def index
-    
-    @deals = Deal.includes(:deal_images).where(user_id: current_user.id)
-
+    @deals = Deal.includes(:deal_images)
   end
 
   def create
-    @user = current_user
+    @deal = Deal.new(deal_params)
+    @deal.user = current_user
 
-    @deal = @user.deals.build(deal_params)
-    
     if @deal.save
-      redirect_to admin_deal_path(@deal), notice: "deal added successfully"
+      redirect_to admin_deals_path, notice: "new deal added successfully"
     else
       render :new
     end
   
-
   end
 
   def update
-    @deal = Deal.find(params[:id])
   
     if @deal.update(deal_params)
       redirect_to admin_deal_path(@deal), notice: "deal updated successfully"
@@ -45,21 +39,23 @@ class Admin::DealsController < ApplicationController
   end
 
   def destroy
-    @deal = Deal.find(params[:id])
 
     if @deal.destroy
       redirect_to admin_deals_path, notice: "deal successfully deleted"
     else
-      debugger
-      flash.now[:alert] = "deal cant be deleted"
-      render 'index'
+      flash.now[:alert] = "deal can't be deleted"
+      render :index
     end
   end
 
   private def deal_params
     params.require(:deal).permit(:title, :description, :threshold_value, :total_availaible, :price, :start_at,
        :expire_at, :max_per_user, :category_id, :published, deal_images_attributes: [:id, :_destroy, :file],
-        locations_attributes: [:id, :address, :city, :state, :pincode, :_destroy])
+        locations_attributes: [:id, :address, :country, :city, :state, :pincode, :_destroy])
   end
 
+  private def set_deal
+    @deal = Deal.find_by(id: params[:id])
+    redirect_to admin_deals_path, alert: 'invalid deal' if !@deal
+  end
 end
