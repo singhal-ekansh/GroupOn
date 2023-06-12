@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
   $('form').on('click', '.remove_record', function (event) {
     $(this).prev('input[type=hidden]').val('1');

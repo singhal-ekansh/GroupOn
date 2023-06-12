@@ -12,8 +12,15 @@
     </div>
     <div class="col-md-3">
       <%= form.hidden_field :_destroy %>
-      <%= link_to 'Delete', '#', class: 'remove_record btn btn-danger', style: 'width: 80px; height: 40px;' %>
+      <%= link_to 'Delete', '#', class: 'remove_record btn btn-danger' %>
     </div>
   </div>
 </li>
 <br>
+
+<style>
+.remove_record{
+  width: 80px;
+  height: 40px;
+}
+</style>

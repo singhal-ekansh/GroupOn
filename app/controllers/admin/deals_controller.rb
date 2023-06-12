@@ -56,6 +56,6 @@ class Admin::DealsController < Admin::AdminBaseController
 
   private def set_deal
     @deal = Deal.find_by(id: params[:id])
-    redirect_to admin_deals_path, alert: 'invalid deal' unless @deal
+    redirect_to admin_deals_path, alert: 'invalid deal' if !@deal
   end
 end

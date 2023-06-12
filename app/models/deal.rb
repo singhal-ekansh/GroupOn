@@ -28,7 +28,7 @@ class Deal < ApplicationRecord
   end
 
   private def ensure_published_by_admin
-    unless User.verified.find_by(id: user_id)&.is_admin
+    if !User.verified.find_by(id: user_id)&.is_admin
       errors.add(:base, 'only admin can add deals')
     end
   end
