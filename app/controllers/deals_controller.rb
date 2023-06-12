@@ -4,8 +4,8 @@ class DealsController < ApplicationController
 
   def index
     @deals = Deal.includes(:likes, :deal_images, :locations).published.live
-    @likes_count = @deals.joins(:likes).group(:id).sum('likes.liked = true')
-    @dislikes_count = @deals.joins(:likes).group(:id).sum('likes.liked = false')
+    @likes_count = @deals.joins(:likes).published.live.group(:id).sum('likes.liked = true')
+    @dislikes_count = @deals.joins(:likes).published.live.group(:id).sum('likes.liked = false')
     
     if !params[:query].blank?
       query = "%#{params[:query]}%"
@@ -37,8 +37,8 @@ class DealsController < ApplicationController
   def expired_deals
 
     @deals = Deal.includes(:likes, :deal_images, :locations).published.expired
-    @likes_count = Deal.joins(:likes).group(:id).sum('likes.liked = true')
-    @dislikes_count = Deal.joins(:likes).group(:id).sum('likes.liked = false')
+    @likes_count = Deal.joins(:likes).published.expired.group(:id).sum('likes.liked = true')
+    @dislikes_count = Deal.joins(:likes).published.expired.group(:id).sum('likes.liked = false')
     
     if !params[:query].blank?
       query = "%#{params[:query]}%"
