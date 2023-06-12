@@ -1,4 +1,5 @@
 class DealsController < ApplicationController
+  before_action :authenticate
 
   def index
     @deals = Deal.includes(:likes, :deal_images, :locations).published.live
@@ -27,7 +28,7 @@ class DealsController < ApplicationController
     unless @like.liked_changed? && @like.save
       @like.destroy
     end
-    redirect_to deals_path
+    redirect_back fallback_location: deals_path
       
   end
 
