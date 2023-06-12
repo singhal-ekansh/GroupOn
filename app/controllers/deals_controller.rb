@@ -5,12 +5,12 @@ class DealsController < ApplicationController
   def index
     @deals = Deal.includes(:likes, :deal_images, :locations).published.live
     
-    unless params[:query].blank?
+    if !params[:query].blank?
       query = "%#{params[:query]}%"
       @deals = @deals.where("title LIKE ? OR locations.city LIKE ?", query, query).references(:locations)
     end
     
-    unless params[:category].blank?
+    if !params[:category].blank?
       @deals = @deals.where(category_id: params[:category])
     end
   end
@@ -20,12 +20,12 @@ class DealsController < ApplicationController
 
   def like
     @deal = Deal.find_by(id: params[:deal_id])
-    return unless @deal
+    return if !@deal
 
     @like = Like.find_or_initialize_by(deal: @deal, user: @current_user)
     @like.liked = params[:value]
 
-    unless @like.liked_changed? && @like.save
+    if !@like.liked_changed? || !@like.save
       @like.destroy
     end
     redirect_back fallback_location: deals_path
@@ -36,17 +36,17 @@ class DealsController < ApplicationController
 
     @deals = Deal.includes(:likes, :deal_images, :locations).published.expired
     
-    unless params[:query].blank?
+    if !params[:query].blank?
       query = "%#{params[:query]}%"
       @deals = @deals.where("title LIKE ? OR locations.city LIKE ?", query, query).references(:locations)
     end
-    unless params[:category].blank?
+    if !params[:category].blank?
       @deals = @deals.where(category_id: params[:category])
     end
   end
 
   def set_deal
     @deal = Deal.find_by(id: params[:id])
-    redirect_to deals_path, alert: 'invalid deal' unless @deal
+    redirect_to deals_path, alert: 'invalid deal' if !@deal
   end
 end
