@@ -24,6 +24,8 @@ class Deal < ApplicationRecord
   before_destroy :check_if_deal_can_be_deleted?
 
   scope :published, -> { where(published: true) }
+  scope :live, -> { where(start_at: (..Date.today), expire_at: (Date.today..)) }
+  scope :expired, -> { where.not(expire_at: (Date.today..))}
   
   private def check_if_deal_can_be_updated?
     if start_at_was <= Date.today

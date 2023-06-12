@@ -1,7 +1,16 @@
 class DealsController < ApplicationController
 
   def index
-    @deals = Deal.published.includes(:likes, :deal_images)
+    @deals = Deal.includes(:likes, :deal_images, :locations).published.live
+    
+    unless params[:query].blank?
+      query = "%#{params[:query]}%"
+      @deals = @deals.where("title LIKE ? OR locations.city LIKE ?", query, query).references(:locations)
+    end
+    
+    unless params[:category].blank?
+      @deals = @deals.where(category_id: params[:category])
+    end
   end
 
   def show
@@ -22,18 +31,16 @@ class DealsController < ApplicationController
       
   end
 
-  def search
-    query = "%#{params[:query]}%"
-    @deals = Deal.published.includes(:likes, :deal_images).joins(:locations).where("title LIKE ? OR locations.city LIKE ?", query, query)
-    render "index"
-  end
+  def expired_deals
 
-  def filter
-    if params[:category].blank?
-      @deals = Deal.published.includes(:likes, :deal_images)    
-    else
-      @deals = Deal.published.includes(:likes, :deal_images).where(category_id: params[:category])
+    @deals = Deal.includes(:likes, :deal_images, :locations).published.expired
+    
+    unless params[:query].blank?
+      query = "%#{params[:query]}%"
+      @deals = @deals.where("title LIKE ? OR locations.city LIKE ?", query, query).references(:locations)
     end
-    render "index"
+    unless params[:category].blank?
+      @deals = @deals.where(category_id: params[:category])
+    end
   end
 end
