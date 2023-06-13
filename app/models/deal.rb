@@ -17,7 +17,7 @@ class Deal < ApplicationRecord
   has_many :deal_images, dependent: :destroy
   has_many :locations, dependent: :destroy
   accepts_nested_attributes_for :locations, allow_destroy: true, reject_if: :all_blank
-  accepts_nested_attributes_for :deal_images, allow_destroy: true, reject_if: lambda { |attr| !attr.key?('file') }
+  accepts_nested_attributes_for :deal_images, allow_destroy: true, reject_if: -> { |attr| !attr.key?('file') }
 
   before_validation :check_if_deal_can_be_updated?, on: :update, if: -> { published_was }
 

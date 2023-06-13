@@ -1,4 +1,4 @@
-class Admin::DealsController < Admin::AdminBaseController
+class Admin::DealsController < Admin::BaseController
   before_action :set_deal, only: [:edit, :show, :update]
   
   def new
