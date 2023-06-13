@@ -45,15 +45,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_062407) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "coupons", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "code", null: false
-    t.bigint "order_id"
-    t.datetime "redeemed_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["order_id"], name: "index_coupons_on_order_id"
-  end
-
   create_table "deals", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title", null: false
     t.text "description"
@@ -71,29 +62,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_062407) do
     t.bigint "category_id"
     t.index ["category_id"], name: "index_deals_on_category_id"
     t.index ["user_id"], name: "index_deals_on_user_id"
-  end
-
-  create_table "delayed_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "priority", default: 0, null: false
-    t.integer "attempts", default: 0, null: false
-    t.text "handler", null: false
-    t.text "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string "locked_by"
-    t.string "queue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
-  end
-
-  create_table "images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "type"
-    t.bigint "deal_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["deal_id"], name: "index_images_on_deal_id"
   end
 
   create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -118,28 +86,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_062407) do
     t.index ["deal_id"], name: "index_locations_on_deal_id"
   end
 
-  create_table "orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "quantity"
-    t.integer "amount"
-    t.datetime "processed_at"
-    t.integer "status", default: 0
-    t.bigint "deal_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["deal_id"], name: "index_orders_on_deal_id"
-    t.index ["user_id"], name: "index_orders_on_user_id"
-  end
-
-  create_table "transactions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "stripe_id"
-    t.bigint "order_id"
-    t.integer "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["order_id"], name: "index_transactions_on_order_id"
-  end
-
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
@@ -157,6 +103,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_062407) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "deals", "categories"
   add_foreign_key "deals", "users"
-  add_foreign_key "images", "deals"
   add_foreign_key "locations", "deals"
 end
