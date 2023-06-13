@@ -7,10 +7,10 @@
             <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
               <%= image_tag "https://pdtxar.com/wp-content/uploads/2019/04/person-placeholder.jpg", class: "img-fluid img-thumbnail mt-4 mb-2",
                 style: "width: 150px; z-index: 1" %>
-              <%= link_to "Edit Profile", edit_user_path(@user), class: "btn btn-outline-dark", style: "z-index: 1;", 'data-mdb-ripple-color': "dark" %>
+              <%= link_to "Edit Profile", edit_user_path(current_user), class: "btn btn-outline-dark", style: "z-index: 1;", 'data-mdb-ripple-color': "dark" %>
             </div>
             <div class="ms-3" style="margin-top: 130px;">
-              <h5><%="#{@user.first_name} #{@user.last_name}"%></h5>
+              <h5><%="#{current_user.first_name} #{current_user.last_name}"%></h5>
             </div>
           </div>
           <div class="p-4 text-black" style="background-color: #f8f9fa;">
@@ -29,9 +29,7 @@
             <div class="mb-4">
               <p class="lead fw-normal mb-1">About</p>
               <div class="p-4" style="background-color: #f8f9fa;">
-                <p class="font-italic mb-1"><%= @user.email %></p>
-                <%# <p class="font-italic mb-1"></p>
-                <p class="font-italic mb-0">Photographer</p> %>
+                <p class="font-italic mb-1"><%= current_user.email %></p>
               </div>
             </div>
           </div>

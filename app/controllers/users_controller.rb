@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
   before_action :authenticate, only: [:show, :edit, :update]
-  before_action :ensure_anonymous, except: [:show, :edit, :update]
+  before_action :ensure_anonymous, only: [:new, :create, :verify_user]
+  helper_method :current_user
 
   def new
     @user = User.new
   end
 
   def show
-    @user = current_user
   end
 
   def create
@@ -22,13 +22,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user
   end
 
   def update
-    @user = current_user
-    if @user.update(user_params)
-      redirect_to @user, notice: "Profile updated"
+    if current_user.update(user_params)
+      redirect_to current_user, notice: "Profile updated"
     else
       render :edit
     end
