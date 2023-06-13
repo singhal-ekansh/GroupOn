@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   before_action :authenticate, only: [:show, :edit, :update]
   before_action :ensure_anonymous, except: [:show, :edit, :update]
 

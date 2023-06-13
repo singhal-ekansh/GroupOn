@@ -15,12 +15,13 @@ Rails.application.routes.draw do
   # resources :orders, only: [:new, :show, :create]
   resources :deals, only: [:index, :show] do 
     post 'like'
+    get 'expired-deals', on: :collection
     resources :orders, only: [:new, :create]
   end
 
-  resources :orders, only: [:index]
+  resources :orders, only: [:index] 
   get 'order-success', to: 'orders#placed'
-  get 'order-failed', to: 'orders#failed'
+  get 'order-failed', to: 'orders#failed'  
 
   namespace :admin do
     resources :deals

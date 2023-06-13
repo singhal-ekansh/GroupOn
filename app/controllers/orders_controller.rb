@@ -1,9 +1,10 @@
 class OrdersController < ApplicationController
   before_action :authenticate
+  before_action :set_deal, only: [:new, :create]
+  before_action :retrieve_checkout_session, only: [:placed, :failed]
 
   def new
     @order = Order.new
-    @deal = Deal.find_by(id: params[:deal_id])
   end
 
   def index
@@ -11,7 +12,6 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @deal = Deal.find_by(id: params[:deal_id])
     @order = Order.new(deal_id: params[:deal_id], user_id:  current_user.id, quantity: params[:order][:quantity],amount: params[:order][:quantity].to_i * @deal.price)
 
     if @order.save
@@ -30,21 +30,30 @@ class OrdersController < ApplicationController
   end
 
   def placed
-    @checkout_session = Stripe::Checkout::Session.retrieve(session[:checkout_session])
     @order = Order.find_by(id: @checkout_session.metadata[:order_id])
-    @order.payment_transactions.create( stripe_id: @checkout_session.payment_intent, order_id: @order.id, status: :paid )
+    @order.payment_transactions.create( stripe_id: @checkout_session.payment_intent, status: :paid )
     @order.update(status: :paid)
     redirect_to orders_path, notice: "Order placed"
   end
 
   def failed
-    @checkout_session = Stripe::Checkout::Session.retrieve(session[:checkout_session])
     @order = Order.find_by(id: @checkout_session.metadata[:order_id])
-    @deal = @order.deal
-    @deal.update_columns(qty_sold: @deal.qty_sold - @order.quantity)
-    @order.payment_transactions.create( stripe_id: @checkout_session.id, order_id: @order.id, status: :failed )
+    @order.deal.update_columns(qty_sold: @order.deal.qty_sold - @order.quantity)
+    @order.payment_transactions.create( stripe_id: @checkout_session.id, status: :failed )
     @order.update(status: :canceled)
     redirect_to deals_path, alert: "payment failed"
   end
 
+  private def set_deal
+    @deal = Deal.find_by(id: params[:deal_id])
+    redirect_to deals_path, alert: 'invalid deal' if !@deal
+  end
+
+  private def retrieve_checkout_session
+    @checkout_session = Stripe::Checkout::Session.retrieve(session[:checkout_session]) if session[:checkout_session]
+    if !@checkout_session || !@checkout_session.status.eql?('open')
+      redirect_to deals_path, alert: 'session expired'
+    end
+    session[:checkout_session] = nil
+  end
 end
