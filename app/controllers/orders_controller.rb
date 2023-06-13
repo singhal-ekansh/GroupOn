@@ -22,6 +22,7 @@ class OrdersController < ApplicationController
            quantity: @order.quantity }], mode: 'payment', metadata: { order_id: @order.id })
        
       session[:checkout_session] = @checkout_session.id  
+      VerifyPaymentJob.set(wait: 2.minutes).perform_later(@checkout_session.id)
 
       redirect_to @checkout_session.url, allow_other_host: true
     else
