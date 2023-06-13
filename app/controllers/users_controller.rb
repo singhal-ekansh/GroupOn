@@ -1,9 +1,13 @@
 class UsersController < ApplicationController
-
-  before_action :ensure_anonymous
+  before_action :authenticate, only: [:show, :edit, :update]
+  before_action :ensure_anonymous, only: [:new, :create, :verify_user]
+  helper_method :current_user
 
   def new
     @user = User.new
+  end
+
+  def show
   end
 
   def create
@@ -17,9 +21,23 @@ class UsersController < ApplicationController
 
   end
 
+  def edit
+  end
+
+  def update
+    if current_user.update(user_params)
+      redirect_to current_user, notice: "Profile updated"
+    else
+      render :edit
+    end
+  end
+
+
   def verify_user
     token = params[:token]
     user = User.find_signed!(token, purpose: 'email_verification')
+    redirect_back(fallback: root_url, alert: 'account already verified') and return if user.verified_at
+
     if user.update(verified_at: Time.now)
       redirect_to new_session_url, notice: 'email verified, login to continue'
     else
@@ -30,10 +48,8 @@ class UsersController < ApplicationController
     redirect_to new_session_url, alert: 'email verify link expired'
   end
 
-
-  private 
-
-  def user_params
+ 
+  private def user_params
     params.require(:user).permit(:first_name, :last_name, :password, :password_confirmation, :email)
   end
 end
