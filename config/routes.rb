@@ -19,10 +19,9 @@ Rails.application.routes.draw do
     resources :orders, only: [:new, :create]
   end
 
-  resources :orders, only: [:index] do
-    get 'order-success', to: 'orders#placed'
-    get 'order-failed', to: 'orders#failed'
-  end   
+  resources :orders, only: [:index] 
+  get 'order-success', to: 'orders#placed'
+  get 'order-failed', to: 'orders#failed'  
 
   namespace :admin do
     resources :deals

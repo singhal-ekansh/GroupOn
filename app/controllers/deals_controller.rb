@@ -2,8 +2,6 @@ class DealsController < ApplicationController
   before_action :authenticate
   before_action :set_deal, only: [:show]
 
-  before_action :authenticate
-
   def index
     @deals = Deal.includes(:likes, :deal_images, :locations).published.live
     @likes_count = @deals.joins(:likes).published.live.group(:id).sum('likes.liked = true')

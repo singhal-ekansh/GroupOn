@@ -26,7 +26,7 @@
             <%= link_to "View Details", deal_path(deal), class: "btn btn-primary" %>
           </div>
           <div class="col-auto">
-            <%= link_to "Get Deal", new_deal_order_path(deal), class: "btn btn-success" %>
+            <%= link_to "Get Deal", new_deal_order_path(deal), class: "btn btn-success" if params[:action].eql?('index') %>
           </div>
           <% @like_value = deal.likes.find_by(user_id: @current_user)&.liked %>
           <div class="col-auto">
