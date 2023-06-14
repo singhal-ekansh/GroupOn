@@ -13,7 +13,12 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create, :new, :destroy]
 
   namespace :admin do
-    resources :deals
+    resources :deals do
+      member do 
+        patch 'publish'
+        patch 'unpublish'
+      end
+    end
   end
   root "admin/deals#index"
 end

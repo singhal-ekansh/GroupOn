@@ -17,9 +17,10 @@ class Deal < ApplicationRecord
   has_many :deal_images, dependent: :destroy
   has_many :locations, dependent: :destroy
   accepts_nested_attributes_for :locations, allow_destroy: true, reject_if: :all_blank
-  accepts_nested_attributes_for :deal_images, allow_destroy: true, reject_if: -> { |attr| !attr.key?('file') }
+  accepts_nested_attributes_for :deal_images, allow_destroy: true, reject_if: ->(attr) { !attr.key?('file') }
 
   before_validation :check_if_deal_can_be_updated?, on: :update, if: -> { published_was }
+  before_destroy :check_if_deal_can_be_deleted?
 
   private def check_if_deal_can_be_updated?
     if start_at_was <= Date.today
@@ -27,8 +28,14 @@ class Deal < ApplicationRecord
     end
   end
 
+  private def check_if_deal_can_be_deleted?
+    if published
+      throw :abort
+    end
+  end
+
   private def ensure_published_by_admin
-    if !User.verified.find_by(id: user_id)&.is_admin
+    if !user.is_admin
       errors.add(:base, 'only admin can add deals')
     end
   end
