@@ -17,17 +17,18 @@ class Deal < ApplicationRecord
   has_many :deal_images, dependent: :destroy
   has_many :locations, dependent: :destroy
   accepts_nested_attributes_for :locations, allow_destroy: true, reject_if: :all_blank
-  accepts_nested_attributes_for :deal_images, allow_destroy: true, reject_if: lambda { |attr| !attr.key?('file') }
-  has_many :likes, dependent: :destroy
-  has_many :orders
-  
-  before_validation :ensure_live_expired_deals_updation, on: :update
+  accepts_nested_attributes_for :deal_images, allow_destroy: true, reject_if: ->(attr) { !attr.key?('file') }
+  has_many :likes, as: :likable, dependent: :destroy
+  has_many :orders, dependent: :destroy
+
+  before_validation :check_if_deal_can_be_updated?, on: :update, if: -> { published_was }
+  before_destroy :check_if_deal_can_be_deleted?
 
   scope :published, -> { where(published: true) }
   scope :live, -> { where(start_at: (..Date.today), expire_at: (Date.today..)) }
   scope :expired, -> { where.not(expire_at: (Date.today..))}
-
-  before_validation :check_if_deal_can_be_updated?, on: :update, if: -> { published_was }
+  scope :search_by_city_and_title, ->(query) { where("title LIKE ? OR locations.city LIKE ?", query, query).references(:locations) }
+  scope :filter_by_category, ->(category_id) { where( category_id: category_id) }
 
   private def check_if_deal_can_be_updated?
     if start_at_was <= Date.today
@@ -35,8 +36,14 @@ class Deal < ApplicationRecord
     end
   end
 
+  private def check_if_deal_can_be_deleted?
+    if published
+      throw :abort
+    end
+  end
+
   private def ensure_published_by_admin
-    if !User.verified.find_by(id: user_id)&.is_admin
+    if !user.is_admin
       errors.add(:base, 'only admin can add deals')
     end
   end
