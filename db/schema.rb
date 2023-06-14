@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_06_062407) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_26_123602) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -64,6 +64,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_062407) do
     t.index ["user_id"], name: "index_deals_on_user_id"
   end
 
+  create_table "images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "type"
+    t.bigint "deal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deal_id"], name: "index_images_on_deal_id"
   create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "deal_id"
     t.bigint "user_id"

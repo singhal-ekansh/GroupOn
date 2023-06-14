@@ -1,0 +1,46 @@
+<%= stylesheet_link_tag "deal_card"%>
+<div class="card my-3 mx-3 shadow text-dark" >
+  <div class="row no-gutters">
+    <% if !deal.deal_images.empty? && deal.deal_images[0].file.attached? %>
+    <div class="col-md-2 d-flex align-items-center">
+      <%= image_tag deal.deal_images[0].file, class: "card-img img-fluid img-fixed-size mb-0" %>
+    </div>
+    <% end %>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h4 class="card-title"><%= deal.title %></h4>
+        <p class="card-text text-truncate"><%= deal.description %></p>
+        <div class="row">
+        <p class="card-text col-auto"><strong>Price Per Deal: </strong>Rs<%= deal.price %></p>
+        <p class="card-text col-auto"><strong>Deal To Go Through: </strong><%= deal.threshold_value %></p>
+        <p class="card-text col-auto"><strong>Max Deals Per User: </strong><%= deal.max_per_user %></p>
+        <p class="card-text col-auto"><strong>Status: </strong><%= deal.published ? 'Published' : 'Draft' %></p>
+        </div>
+        <div class="row">
+        <p class="card-text col-auto"><strong>Total Available: </strong><%= deal.total_availaible%></p>
+         <p class="card-text col-auto"><strong>Quantity Sold: </strong><%= deal.qty_sold %></p>
+         <p class="card-text col-auto"><strong>Start Date: </strong><%= deal.start_at&.to_date.inspect %></p>
+         <p class="card-text col-auto"><strong>Expire Date: </strong><%= deal.expire_at&.to_date.inspect %></p>
+        </div>
+        <div class="row">
+          <div class="col-auto">
+            <%= link_to "Preview", admin_deal_path(deal), class: "btn btn-primary" %>
+          </div>
+          <div class="col-auto">
+            <%= link_to "Edit Deal", edit_admin_deal_path(deal), class: "btn btn-primary" %>
+          </div>
+          <div class="col-auto">
+            <% if deal.published %>
+              <%=button_to "Unpublish", unpublish_admin_deal_path(deal), method: :patch , class: "btn btn-danger" %>
+            <% else %>
+              <%=button_to "Publish", publish_admin_deal_path(deal), method: :patch , class: "btn btn-success" %>
+            <%end%>  
+          </div>
+          <div class="col-auto">
+            <%=button_to "Delete Deal", admin_deal_path(deal), method: :delete , class: "btn btn-danger" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

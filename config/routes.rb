@@ -11,5 +11,14 @@ Rails.application.routes.draw do
   resources :reset_passwords, only: [:create, :new]
 
   resources :sessions, only: [:create, :new, :destroy]
-  root "users#new"
+
+  namespace :admin do
+    resources :deals do
+      member do 
+        patch 'publish'
+        patch 'unpublish'
+      end
+    end
+  end
+  root "admin/deals#index"
 end
