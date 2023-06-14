@@ -25,12 +25,10 @@ class Admin::DealsController < Admin::BaseController
       redirect_to admin_deals_path, notice: "new deal added successfully"
     else
       render :new
-    end
-  
+    end 
   end
 
   def update
-  
     if @deal.update(deal_params)
       redirect_to admin_deal_path(@deal), notice: "deal updated successfully"
     else
@@ -39,7 +37,6 @@ class Admin::DealsController < Admin::BaseController
   end
 
   def destroy
-
     if @deal.destroy
       redirect_to admin_deals_path, notice: "deal successfully deleted"
     else
