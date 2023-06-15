@@ -9,12 +9,15 @@ class Order < ApplicationRecord
   belongs_to :user
   belongs_to :deal
   has_many :payment_transactions, class_name: 'Transaction'
-  has_many :coupons
+  has_many :coupons, dependent: :destroy
 
   enum :status, [:pending, :paid, :processed, :canceled]
 
   before_validation :set_amount, if: :quantity_changed?
   after_create :update_deal_quantity
+  after_create :set_order_verify_job
+  before_update :process_order, if: ->{ processed? && status_was == 'paid' }
+  before_update :cancel_order, if: ->{ canceled? && status_was == 'paid' }
 
   private def set_amount
     self.amount = quantity * deal.price
@@ -29,7 +32,7 @@ class Order < ApplicationRecord
   end
 
   private def check_deal_live
-    errors.add(:base, 'order can be placed only for live deals') if !Time.now.between?(deal.start_at, deal.expire_at)
+    errors.add(:base, 'order can be placed only for live deals') if !Date.today.between?(deal.start_at, deal.expire_at)
   end
 
   private def check_max_deal_per_user
@@ -38,12 +41,26 @@ class Order < ApplicationRecord
   end
 
   private def update_deal_quantity
-    deal.update(qty_sold: deal.qty_sold + quantity)
+    deal.update_columns(qty_sold: deal.qty_sold + quantity)
   end
 
-  def generate_coupons
+  private def set_order_verify_job
+    VerifyPaymentJob.set(wait: ORDER_VERIFY_JOB__WAIT_TIME).perform_later(id)
+  end
+
+  private def process_order
+    generate_coupons
+    OrderMailer.completed(self).deliver_now
+  end
+
+  private def cancel_order
+    StripeCheckoutService.new(self).generate_refund
+    OrderMailer.cancelled(self).deliver_later
+  end
+
+  private def generate_coupons
     quantity.times do 
-      self.coupons.create
+      coupons.create
     end
   end
 end
