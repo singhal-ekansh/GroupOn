@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  resources :users
+  resources :users, except: [:destroy]
   get "user-verify/:token", to: "users#verify_user", as: "user-verify"
   
   resources :request_passwords, only: [:create, :new]
@@ -11,20 +11,28 @@ Rails.application.routes.draw do
   resources :reset_passwords, only: [:create, :new]
 
   resources :sessions, only: [:create, :new, :destroy]
-
-  # resources :orders, only: [:new, :show, :create]
+  
   resources :deals, only: [:index, :show] do 
-    post 'like'
+    resource 'likes', only: [:create, :update, :destroy]
+    get 'search', on: :collection
+    get 'expired-deals', on: :collection
     resources :orders, only: [:new, :create]
-  end
-
-  resources :orders, only: [:index]
+  end   
+  
+  resources :orders, only: [:index] 
   get 'order-success', to: 'orders#placed'
   get 'order-failed', to: 'orders#failed'
 
   namespace :admin do
-    resources :deals
+    resources :deals do
+      member do 
+        patch 'publish'
+        patch 'unpublish'
+      end
+    end
     resources :reports, only: [:index]
   end
-  root "admin/deals#index"
+
+  resources :coupons, only: [:index]
+  root "deals#index"
 end
