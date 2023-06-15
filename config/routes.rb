@@ -12,6 +12,12 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:create, :new, :destroy]
 
+  resources :deals, only: [:index, :show] do 
+    resource 'likes', only: [:create, :update, :destroy]
+    get 'search', on: :collection
+    get 'expired-deals', on: :collection
+  end   
+
   namespace :admin do
     resources :deals do
       member do 

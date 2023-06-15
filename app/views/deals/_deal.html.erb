@@ -1,0 +1,81 @@
+<%= stylesheet_link_tag "deal_card"%>
+<div class="card my-3 mx-3 bg-light shadow">
+  <div class="row no-gutters">
+    <% if !deal.deal_images.empty? && deal.deal_images[0].file.attached? %>
+    <div class="col-md-2 d-flex align-items-center">
+      <%= image_tag deal.deal_images[0].file, class: "card-img img-fluid img-fixed-size mb-0" %>
+    </div>
+    <% end %>
+    <div class="col-md-8">
+      <div class="card-body text-dark">
+        <h5 class="card-title"><%= deal.title %></h5>
+        <p class="card-text text-truncate"><%= deal.description %></p>
+       <div class="row">
+          <p class="card-text col-auto"><strong>Price Per Deal: </strong>Rs <%= deal.price %></p>
+          <p class="card-text col-auto"><strong>Deal To Go Through: </strong><%= deal.threshold_value %></p>
+          <p class="card-text col-auto"><strong>Max Deals Per User: </strong><%= deal.max_per_user %></p>
+        </div>
+        <div class="row">
+          <p class="card-text col-auto"><strong>Total Available: </strong><%= deal.total_availaible - deal.qty_sold%></p>      
+          <p class="card-text col-auto"><strong>Valid From: </strong><%= deal.start_at.to_date.to_s %></p>      
+          <p class="card-text col-auto"><strong>Valid Till: </strong><%= deal.expire_at.to_date.to_s %></p>         
+        </div>
+      
+        <div class="row">
+          <div class="col-auto">
+            <%= link_to "View Details", deal_path(deal), class: "btn btn-primary" %>
+          </div>
+          <% @like_value = @current_user.likes.find_by(likable: deal)&.is_liked %>
+
+          <% if @like_value == nil %>
+            <div class="col-auto">
+            <%= button_to deal_likes_path(deal, value: true) do %>
+              <%= image_tag ("like_empty.svg") , size: "20x20"%>
+            <%end%>
+            <%=likes_count[deal.id] if likes_count%>
+          </div>
+
+          <div class="col-auto">
+            <%= button_to deal_likes_path(deal, value: false) do %>
+              <%= image_tag ("dislike_empty.svg") , size: "20x20"%>
+             <%end%> 
+            <%=dislikes_count[deal.id] if dislikes_count%>
+          </div>
+
+          <% else %>
+            <% if @like_value %>
+              <div class="col-auto">
+                <%= button_to deal_likes_path(deal), method: :delete do %>
+                  <%= image_tag "like_filled.svg" , size: "20x20"%>
+                <%end%>
+                <%=likes_count[deal.id] if likes_count%>
+              </div>
+
+              <div class="col-auto">
+               <%= button_to deal_likes_path(deal, value: false), method: :patch do %> 
+                 <%= image_tag  "dislike_empty.svg" , size: "20x20"%>
+               <%end%>
+               <%=dislikes_count[deal.id] if dislikes_count%>
+              </div>
+
+            <% else %>
+              <div class="col-auto">
+                <%= button_to deal_likes_path(deal, value: true), method: :patch do %>
+                  <%= image_tag "like_empty.svg" , size: "20x20"%>
+                <%end%>
+                <%=likes_count[deal.id] if likes_count%>
+              </div>
+
+              <div class="col-auto">
+               <%= button_to deal_likes_path(deal), method: :delete do %> 
+                 <%= image_tag  "dislike_filled.svg" , size: "20x20"%>
+               <%end%>
+               <%= dislikes_count[deal.id] if dislikes_count %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
