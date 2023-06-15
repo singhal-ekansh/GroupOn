@@ -1,10 +1,10 @@
 class Order < ApplicationRecord
   validates :quantity, :amount, :status, presence: true
   validates :quantity, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validate :check_deal_availaible, if: [:quantity, :deal]
-  validate :check_deal_published, if: :deal
-  validate :check_deal_live, if: :deal
-  validate :check_max_deal_per_user, if: [:quantity, :deal]
+  validate :check_deal_availaible, if: [:quantity, :deal], on: :create
+  validate :check_deal_published, if: :deal, on: :create
+  validate :check_deal_live, if: :deal, on: :create
+  validate :check_max_deal_per_user, if: [:quantity, :deal], on: :create
 
   belongs_to :user
   belongs_to :deal
@@ -13,12 +13,7 @@ class Order < ApplicationRecord
   enum :status, [:pending, :paid, :processed, :canceled]
 
   before_validation :set_amount, if: :quantity_changed?
-  
-  def generate_stripe_session(success_url, cancel_url)
-    Stripe::Checkout::Session.create(success_url: success_url, cancel_url: cancel_url,
-      line_items: [{ price_data: { currency: 'inr', unit_amount: deal.price * 100, product_data: {name: deal.title} } ,
-         quantity: quantity }], mode: 'payment', metadata: { order_id: id })
-  end
+  after_create :update_deal_quantity
 
   private def set_amount
     self.amount = quantity * deal.price
@@ -41,4 +36,7 @@ class Order < ApplicationRecord
     errors.add(:base, 'quantity exceed more than maximum allowed per user') if quantity_already_purchased + quantity > deal.max_per_user
   end
 
+  private def update_deal_quantity
+    deal.update_columns(qty_sold: deal.qty_sold + quantity)
+  end
 end

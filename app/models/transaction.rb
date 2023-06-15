@@ -4,5 +4,5 @@ class Transaction < ApplicationRecord
 
   belongs_to :order
 
-  enum :status, [:paid, :failed, :refunded]
+  enum :status, [:pending, :paid, :failed, :refunded]
 end
