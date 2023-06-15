@@ -33,7 +33,7 @@ class Order < ApplicationRecord
 
   private def check_max_deal_per_user
     quantity_already_purchased = deal.orders.where(user_id: user_id).where(status: [:paid, :pending]).sum(:quantity)
-    errors.add(:base, 'quantity exceed more than maximum allowed per user') if quantity_already_purchased + quantity > deal.max_per_user
+    errors.add(:base, "you can buy only #{deal.max_per_user - quantity_already_purchased} more deal") if quantity_already_purchased + quantity > deal.max_per_user
   end
 
   private def update_deal_quantity

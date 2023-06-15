@@ -24,16 +24,12 @@ class OrdersController < ApplicationController
   end
 
   def placed
-    @order.payment_transactions.find_by(status: :pending).update(status: :paid)
-    @order.update(status: :paid)
+    @order.payment_transactions.find_by(status: :pending)&.update(status: :paid)
     redirect_to orders_path, notice: "Order placed"
   end
 
   def failed
-    @order.payment_transactions.find_by(status: :pending).update(status: :failed)
-    @order.deal.update(qty_sold: @order.deal.qty_sold - @order.quantity)
-    @order.update(status: :canceled)
-
+    @order.payment_transactions.find_by(status: :pending)&.update(status: :failed)
     redirect_to orders_path, alert: "payment failed"
   end
 
