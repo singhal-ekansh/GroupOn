@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag "deal_card"%>
 <div class="card my-3 mx-3 bg-light shadow">
   <div class="row no-gutters">
     <% if !deal.deal_images.empty? && deal.deal_images[0].file.attached? %>
@@ -10,7 +11,7 @@
         <h5 class="card-title"><%= deal.title %></h5>
         <p class="card-text text-truncate"><%= deal.description %></p>
        <div class="row">
-          <p class="card-text col-auto"><strong>Price Per Deal: </strong>Rs<%= deal.price %></p>
+          <p class="card-text col-auto"><strong>Price Per Deal: </strong>Rs <%= deal.price %></p>
           <p class="card-text col-auto"><strong>Deal To Go Through: </strong><%= deal.threshold_value %></p>
           <p class="card-text col-auto"><strong>Max Deals Per User: </strong><%= deal.max_per_user %></p>
         </div>
@@ -24,40 +25,63 @@
           <div class="col-auto">
             <%= link_to "View Details", deal_path(deal), class: "btn btn-primary" %>
           </div>
-          <div class="col-auto">
-            <%= link_to "Get Deal", new_deal_order_path(deal), class: "btn btn-success" %>
-          </div>
-          <% @like_value = deal.likes.find_by(user_id: @current_user)&.liked %>
-          <div class="col-auto">
-            <%= button_to deal_like_path(deal, value: true) do %>
-              <% if @like_value == nil %>
-                <%= image_tag ("like_empty.svg") , size: "20x20"%>
-              <% else %>  
-                <%= image_tag (@like_value ? "like_filled.svg" : "like_empty.svg") , size: "20x20"%>
-              <%end%>
+          <%if live %>
+            <div class="col-auto">
+              <%= link_to "Get Deal", new_deal_order_path(deal), class: "btn btn-success" %>
+            </div>
+          <%end%>
+          
+          <% @like_value = @current_user.likes.find_by(likable: deal)&.is_liked %>
+
+          <% if @like_value == nil %>
+            <div class="col-auto">
+            <%= button_to deal_likes_path(deal, value: true) do %>
+              <%= image_tag ("like_empty.svg") , size: "20x20"%>
             <%end%>
+            <%=likes_count[deal.id] if likes_count%>
           </div>
+
           <div class="col-auto">
-            <%= button_to deal_like_path(deal, value: false) do %>
-              <% if @like_value == nil %>
-                <%= image_tag ("dislike_empty.svg") , size: "20x20"%>
-              <% else %>  
-                <%= image_tag (@like_value ? "dislike_empty.svg" : "dislike_filled.svg") , size: "20x20"%>
-              <%end%>
-            <%end%>
+            <%= button_to deal_likes_path(deal, value: false) do %>
+              <%= image_tag ("dislike_empty.svg") , size: "20x20"%>
+             <%end%> 
+            <%=dislikes_count[deal.id] if dislikes_count%>
           </div>
+
+          <% else %>
+            <% if @like_value %>
+              <div class="col-auto">
+                <%= button_to deal_likes_path(deal), method: :delete do %>
+                  <%= image_tag "like_filled.svg" , size: "20x20"%>
+                <%end%>
+                <%=likes_count[deal.id] if likes_count%>
+              </div>
+
+              <div class="col-auto">
+               <%= button_to deal_likes_path(deal, value: false), method: :patch do %> 
+                 <%= image_tag  "dislike_empty.svg" , size: "20x20"%>
+               <%end%>
+               <%=dislikes_count[deal.id] if dislikes_count%>
+              </div>
+
+            <% else %>
+              <div class="col-auto">
+                <%= button_to deal_likes_path(deal, value: true), method: :patch do %>
+                  <%= image_tag "like_empty.svg" , size: "20x20"%>
+                <%end%>
+                <%=likes_count[deal.id] if likes_count%>
+              </div>
+
+              <div class="col-auto">
+               <%= button_to deal_likes_path(deal), method: :delete do %> 
+                 <%= image_tag  "dislike_filled.svg" , size: "20x20"%>
+               <%end%>
+               <%= dislikes_count[deal.id] if dislikes_count %>
+              </div>
+            <% end %>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style>
-  .img-fixed-size {
-    height: 200px; /* Set the desired height for the image */
-    width: 100%; /* Set the width to fill the container */
-    
-    margin-top: 0; /* Remove top margin */
-    margin-bottom: 0; /* Remove bottom margin */
-  }
-</style>

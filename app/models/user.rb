@@ -8,7 +8,8 @@ class User < ApplicationRecord
 
   has_secure_password
   has_many :deals, dependent: :destroy
-  has_many :orders
+  has_many :likes, dependent: :destroy
+  has_many :orders, dependent: :destroy
   has_many :coupons, through: :orders
 
   after_create :generate_verify_token, unless: :is_admin?
