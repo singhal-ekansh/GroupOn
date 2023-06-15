@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_05_123517) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_15_123439) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -69,7 +69,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_05_123517) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id"
+    t.bigint "merchant_id"
     t.index ["category_id"], name: "index_deals_on_category_id"
+    t.index ["merchant_id"], name: "index_deals_on_merchant_id"
     t.index ["user_id"], name: "index_deals_on_user_id"
   end
 
@@ -97,12 +99,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_05_123517) do
   end
 
   create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "deal_id"
+    t.string "likable_type"
+    t.bigint "likable_id"
     t.bigint "user_id"
-    t.boolean "liked"
+    t.boolean "is_liked", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["deal_id"], name: "index_likes_on_deal_id"
+    t.index ["likable_type", "likable_id"], name: "index_likes_on_likable"
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
@@ -114,6 +117,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_05_123517) do
     t.bigint "deal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "country"
     t.index ["deal_id"], name: "index_locations_on_deal_id"
   end
 
@@ -128,6 +132,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_05_123517) do
     t.datetime "updated_at", null: false
     t.index ["deal_id"], name: "index_orders_on_deal_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "reviewable_type"
+    t.bigint "reviewable_id"
+    t.text "body"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "transactions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -149,6 +164,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_05_123517) do
     t.datetime "password_last_reset_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role", default: 0
+    t.string "stripe_customer_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

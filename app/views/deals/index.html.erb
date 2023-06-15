@@ -1,3 +1,33 @@
-<center><h1>ALL DEALS</h1></center>
-<%=render @deals%>
+<center><h1>LIVE DEALS</h1></center>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-auto">
+      <%= form_with url: search_deals_path, method: :get do |f| %>
+        <div class="input-group">
+          <div class="form-outline">
+            <%= f.hidden_field :deal_type, value: 'live'%>
+            <%= f.text_field :query, value: params[:query], class: "form-control", type: "search" %>
+          </div>
+          <%= f.submit "Search", class: "btn btn-primary" %>
+        </div>
+      </div>
+
+      <div class="col-auto">
+        <div class="input-group">
+          <%= f.collection_select :category, Category.all, :id, :name, { include_blank: 'All Category',selected: params[:category] } %>
+          <%= f.submit "Filter", class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+    
+    <div class='col-auto'>
+      <%=link_to 'Past Deals',expired_deals_deals_path , class: "btn btn-primary" %>
+    </div>
+  </div>
+    
+  </div>
+</div>
+
+<%=render @deals, likes_count: @likes_count, dislikes_count: @dislikes_count, live: true%>
 <%= will_paginate @deals, class: "apple_pagination" %>

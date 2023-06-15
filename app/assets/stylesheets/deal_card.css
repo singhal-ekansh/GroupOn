@@ -1,0 +1,4 @@
+.img-fixed-size {
+  height: 200px; /* Set the desired height for the image */
+  width: 100%; /* Set the width to fill the container */
+}
