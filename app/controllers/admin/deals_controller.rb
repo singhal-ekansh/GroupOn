@@ -1,5 +1,5 @@
-class Admin::DealsController < Admin::AdminBaseController
-  before_action :set_deal, only: [:edit, :show, :update]
+class Admin::DealsController < Admin::BaseController
+  before_action :set_deal, only: [:edit, :show, :update, :destroy, :publish, :unpublish]
   
   def new
     @deal = Deal.new
@@ -25,12 +25,10 @@ class Admin::DealsController < Admin::AdminBaseController
       redirect_to admin_deals_path, notice: "new deal added successfully"
     else
       render :new
-    end
-  
+    end 
   end
 
   def update
-  
     if @deal.update(deal_params)
       redirect_to admin_deal_path(@deal), notice: "deal updated successfully"
     else
@@ -39,12 +37,26 @@ class Admin::DealsController < Admin::AdminBaseController
   end
 
   def destroy
-
     if @deal.destroy
       redirect_to admin_deals_path, notice: "deal successfully deleted"
     else
-      flash.now[:alert] = "deal can't be deleted"
-      render :index
+      redirect_to admin_deals_path, alert: "published deal can't be deleted"
+    end
+  end
+
+  def publish
+    if @deal.update(published: true)
+      redirect_to admin_deals_path, notice: 'deal published'
+    else
+      redirect_to admin_deals_path, alert: 'deal can not be published'
+    end
+  end
+
+  def unpublish
+    if @deal.update(published: false)
+      redirect_to admin_deals_path, notice: 'deal unpublished'
+    else
+      redirect_to admin_deals_path, alert: 'can not unpublish deal'
     end
   end
 

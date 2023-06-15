@@ -3,10 +3,11 @@
 <div class="container">
   <div class="row">
     <div class="col-auto">
-      <%= form_with url: deals_path, method: :get do |f| %>
+      <%= form_with url: search_deals_path, method: :get do |f| %>
         <div class="input-group">
           <div class="form-outline">
-            <%= f.text_field :query,value: params[:query], class: "form-control", type: "search" %>
+            <%= f.hidden_field :deal_type, value: 'live'%>
+            <%= f.text_field :query, value: params[:query], class: "form-control", type: "search" %>
           </div>
           <%= f.submit "Search", class: "btn btn-primary" %>
         </div>
@@ -28,4 +29,4 @@
   </div>
 </div>
 
-<%=render @deals, likes_count: @likes_count, dislikes_count: @dislikes_count%>
+<%=render @deals, likes_count: @likes_count, dislikes_count: @dislikes_count, live: true%>

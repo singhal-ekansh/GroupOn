@@ -1,8 +1,8 @@
 class Like < ActiveRecord::Base
-  validates :liked, exclusion: [nil]
-  validates :deal_id, uniqueness: { scope: :user_id }
+  validates :is_liked, inclusion: [true, false]
+  validates :user_id, uniqueness: { scope: [:likable_type, :likable_id] }
   
-  belongs_to :deal
+  belongs_to :likable, polymorphic: true
   belongs_to :user
 
 end

@@ -30,6 +30,13 @@
             <%= link_to "Edit Deal", edit_admin_deal_path(deal), class: "btn btn-primary" %>
           </div>
           <div class="col-auto">
+            <% if deal.published %>
+              <%=button_to "Unpublish", unpublish_admin_deal_path(deal), method: :patch , class: "btn btn-danger" %>
+            <% else %>
+              <%=button_to "Publish", publish_admin_deal_path(deal), method: :patch , class: "btn btn-success" %>
+            <%end%>  
+          </div>
+          <div class="col-auto">
             <%=button_to "Delete Deal", admin_deal_path(deal), method: :delete , class: "btn btn-danger" %>
           </div>
         </div>
