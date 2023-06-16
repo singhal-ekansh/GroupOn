@@ -3,7 +3,7 @@ class Order < ApplicationRecord
   validates :quantity, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
   validates :amount, numericality: { greater_than_or_equal_to: 0.01 }
   validate :check_deal_availaible, if: [:quantity, :deal]
-  validate :check_deal_valid, if: ->{status.in?(['paid', 'pending'])}
+  validate :check_deal_valid, if: ->{ status.in?(['paid', 'pending']) }
   validate :check_max_deal_per_user, if: [:quantity, :deal], on: :create
 
   belongs_to :user
