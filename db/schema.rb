@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_13_113316) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_15_123439) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -96,24 +96,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_113316) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deal_id"], name: "index_images_on_deal_id"
-  create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "deal_id"
-    t.bigint "user_id"
-    t.boolean "liked"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["deal_id"], name: "index_likes_on_deal_id"
-    t.index ["user_id"], name: "index_likes_on_user_id"
-  end
-
-  create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "deal_id"
-    t.bigint "user_id"
-    t.boolean "liked"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["deal_id"], name: "index_likes_on_deal_id"
-    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -183,6 +165,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_113316) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role", default: 0
+    t.string "stripe_customer_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
@@ -190,5 +173,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_113316) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "deals", "categories"
   add_foreign_key "deals", "users"
+  add_foreign_key "images", "deals"
   add_foreign_key "locations", "deals"
 end

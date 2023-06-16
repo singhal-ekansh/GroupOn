@@ -1,0 +1,34 @@
+<div class="order card bg-white shadow mx-5 my-3 text-dark">
+  <div class="card-body text-left">
+    <h5 class="card-title"><strong><%= order.deal&.title %></strong></h5>
+    <div class="row">
+      <div class="col-6">
+        <p class="card-text"><strong>Total:</strong> Rs <%= order.amount %></p>
+      </div>
+      <div class="col-6">
+        <p class="card-text"><strong>Status:</strong> <span class="chip
+          <% if order.status == 'pending' %>
+            yellow-chip
+          <% elsif order.status == 'paid' %>
+            green-chip
+          <% elsif order.status == 'canceled' %>
+            red-chip
+          <% elsif order.status == 'processed' %>
+            green-chip
+          <% else %>
+            active-chip
+          <% end %>
+        "><%= order.status.capitalize %></span></p>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-6">
+        <p class="card-text"><strong>Quantity:</strong> <%= order.quantity %></p>
+      </div>
+      <div class="col-6">
+        <p class="card-text"><strong>Placed On:</strong> <%= order.created_at.to_date %></p>
+      </div>
+    </div>
+  </div>
+</div>
+<%= stylesheet_link_tag 'status_chip'%>
