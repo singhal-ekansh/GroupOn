@@ -34,7 +34,6 @@ class Deal < ApplicationRecord
   end
 
   def decrease_qty_by(quantity)
-    debugger
     update(qty_sold: qty_sold - quantity)
   end
 

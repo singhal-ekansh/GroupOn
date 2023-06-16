@@ -20,8 +20,10 @@ Rails.application.routes.draw do
   end   
   
   resources :orders, only: [:index] do
-    get 'payment-success', to: 'orders#placed', on: :collection
-    get 'payment-failed', to: 'orders#failed', on: :collection
+    collection do 
+      get 'payment-success'
+      get 'payment-failed'
+    end
   end
 
   namespace :admin do

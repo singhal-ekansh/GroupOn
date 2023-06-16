@@ -27,7 +27,7 @@ class OrdersController < ApplicationController
     end
   end
 
-  def placed
+  def payment_success
     transaction = @order.payment_transactions.find_by(status: :pending)
     if transaction&.update(status: :paid)
       flash[:notice] = "Order placed"
@@ -37,19 +37,19 @@ class OrdersController < ApplicationController
     redirect_to orders_path
   end
 
-  def failed
+  def payment_failed
     @order.payment_transactions.find_by(status: :pending)&.update(status: :failed)
     redirect_to orders_path, alert: "payment failed"
   end
 
   private def set_deal
     @deal = Deal.find_by(id: params[:deal_id])
-    redirect_to deals_path, alert: 'invalid deal' if !@deal
+    redirect_to root_path, alert: 'invalid deal' if !@deal
   end
 
   private def set_order
     @order = Order.find_by(id: params[:order_id])
-    redirect_to deals_path, alert: 'invalid order' if !@order
+    redirect_to root_path, alert: 'invalid order' if !@order
   end
 
 end
