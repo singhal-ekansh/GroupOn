@@ -41,7 +41,6 @@ class Order < ApplicationRecord
   end
 
   private def update_deal_quantity
-    debugger
     deal.increase_qty_by(quantity)
   end
 
