@@ -14,6 +14,9 @@ gem 'bootsnap', require: false
 
 gem "cssbundling-rails", "~> 1.1"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
+
+gem 'delayed_job_active_record'
+
 gem 'importmap-rails'
 # Use Sass to process CSS
 gem "sassc-rails"
