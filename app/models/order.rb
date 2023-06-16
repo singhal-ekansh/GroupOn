@@ -3,13 +3,13 @@ class Order < ApplicationRecord
   validates :quantity, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
   validates :amount, numericality: { greater_than_or_equal_to: 0.01 }
   validate :check_deal_availaible, if: [:quantity, :deal]
-  validate :check_deal_valid, if: :deal
+  validate :check_deal_valid, if: ->{status.in?(['paid', 'pending'])}
   validate :check_max_deal_per_user, if: [:quantity, :deal], on: :create
 
   belongs_to :user
   belongs_to :deal
   has_many :payment_transactions, class_name: 'Transaction'
-  has_many :coupons, dependent: :destroy
+  has_many :coupons, dependent: :restrict_with_error
 
   enum :status, [:pending, :paid, :processed, :canceled]
 
@@ -30,6 +30,7 @@ class Order < ApplicationRecord
   end
 
   private def check_deal_valid
+    return if !deal
     errors.add(:base, 'order can be placed only for live and published deals') if !Date.today.between?(deal.start_at, deal.expire_at) || !deal.published
   end
 
@@ -48,6 +49,7 @@ class Order < ApplicationRecord
   end
 
   private def process_order
+    debugger
     generate_coupons
     OrderMailer.completed(self).deliver_now
   end
