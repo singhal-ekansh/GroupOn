@@ -1,14 +1,12 @@
 class StripeCheckoutService
 
-  def initialize(current_user, success_url, cancel_url, order)
-    @current_user = current_user
+  def initialize(success_url, cancel_url, order)
     @success_url = success_url
     @cancel_url = cancel_url
     @order = order
   end
   
-
-  def generate_payment
+  def call
     retreive_customer
     generate_stripe_session
     generate_transaction
@@ -25,23 +23,24 @@ class StripeCheckoutService
   end
 
   private def retreive_customer
-    begin
-      @customer = Stripe::Customer.retrieve(@current_user.stripe_customer_id)
-    rescue
+    if @order.user.stripe_customer_id
+      @customer = Stripe::Customer.retrieve(@order.user.stripe_customer_id)
+    else
       create_customer
     end
   end
 
   private def create_customer
     @customer = Stripe::Customer.create(
-      name: "#{@current_user.first_name} #{@current_user.last_name}",
-      email: @current_user.email
+      name: "#{@order.user.first_name} #{@order.user.last_name}",
+      email: @order.user.email
     )
-    @current_user.update(stripe_customer_id: @customer.id)
+    @order.user.update(stripe_customer_id: @customer.id)
   end
 
   private def generate_transaction
-    @order.payment_transactions.create(stripe_id: @stripe_session.id, status: :pending)
+    transaction = @order.payment_transactions.build(stripe_id: @stripe_session.id, status: :pending)
+    transaction.save
   end
 
 end
