@@ -1,7 +1,7 @@
 <div class="signup-form">
   <h2>Update Profile</h2>
   
-  <%= form_with(model: @user) do |form| %>
+  <%= form_with(model: current_user) do |form| %>
     <%= render partial: "shared/error_messages", locals: { object: form.object } %>
     <div class="form-group">
       <%= form.text_field :first_name, class: "form-control", placeholder: "First Name", required: true %>

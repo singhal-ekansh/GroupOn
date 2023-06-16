@@ -9,8 +9,16 @@
             Top Spending Customers
           </div>
           <div class="card-body">
-            <% @top_customers&.each do |customer| %>
-              <p><%= customer.first_name %>  <%= customer.last_name %></p>
+          <div class="row">
+              <div class="col"> <strong><%= "Name"%></strong></div>
+              <div class="col"> <strong><%= "Spending"%></strong></div>
+            </div>
+            <br>
+            <% @top_customers&.each do |customer, amount| %>
+              <div class="row">
+                <div class="col"> <%= "#{customer[1]} #{customer[2]}"%></div>
+                <div class="col"> <%= "Rs #{amount}"%></div>
+              </div>
             <% end %>
           </div>
         </div>
@@ -21,23 +29,31 @@
             Top Grossing Deals
           </div>
           <div class="card-body">
-            <%= form_with url: admin_filter_deals_path do |form| %>
+            <%= form_with url: admin_reports_path, method: :get do |form| %>
               <div class="row">
                 <div class="form-group col">
                   <label for="start">Start Date:</label>
-                  <%= form.date_field :start_at, class: 'form-control' ,required: true %>
+                  <%= form.date_field :start_at, value: params[:start_at], class: 'form-control' ,required: true %>
                 </div>
                 <div class="form-group col">
                   <label for="end">End Date:</label>
-                  <%= form.date_field :end_at, class: 'form-control',required: true %>
+                  <%= form.date_field :end_at, value: params[:end_at], class: 'form-control',required: true %>
                 </div>
               </div>
               <br>
               <%= form.button "filter", class: "btn btn-primary"%>
             <%end%>
             <hr>
-            <% @top_deals&.each do |deal| %>
-              <p><%= deal.title %></p>
+            <div class="row">
+              <div class="col"> <strong><%= "Deal"%></strong></div>
+              <div class="col"> <strong><%= "Revenue"%></strong></div>
+            </div>
+            <br>
+            <% @top_deals&.each do |deal, amount| %>
+              <div class="row">
+                <div class="col"> <%= "#{deal[1]}"%></div>
+                <div class="col"> <%= "#{amount}"%></div>
+              </div>
             <% end %>
           </div>
         </div>
@@ -48,8 +64,16 @@
             Top Categories
           </div>
           <div class="card-body">
-            <% @top_categories&.each do |category| %>
-              <p><%= category.name %></p>
+            <div class="row">
+              <div class="col"> <strong><%= "Name"%></strong></div>
+              <div class="col"> <strong><%= "Qty Sold"%></strong></div>
+            </div>
+              <br>
+            <% @top_categories&.each do |category, qty| %>
+              <div class="row">
+                <div class="col"> <%= "#{category[1]}"%></div>
+                <div class="col"> <%= "#{qty}"%></div>
+              </div>
             <% end %>
           </div>
         </div>

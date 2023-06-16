@@ -21,13 +21,7 @@ class ApplicationController < ActionController::Base
 
   private def ensure_anonymous
     if signed_in?
-      redirect_back fallback_location: admin_deals_path , alert: 'Already logged in'
-    end
-  end
-
-  private def ensure_admin
-    if !current_user.is_admin
-      redirect_to root_path, alert: 'Only admin can access this section'
+      redirect_back fallback_location: root_path , alert: 'Already logged in'
     end
   end
 

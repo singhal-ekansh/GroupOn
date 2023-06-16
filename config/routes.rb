@@ -11,23 +11,27 @@ Rails.application.routes.draw do
   resources :reset_passwords, only: [:create, :new]
 
   resources :sessions, only: [:create, :new, :destroy]
-
-  # resources :orders, only: [:new, :show, :create]
+  
   resources :deals, only: [:index, :show] do 
-    post 'like'
-    get "search", on: :collection
-    get "filter", on: :collection
+    resource 'likes', only: [:create, :update, :destroy]
+    get 'search', on: :collection
+    get 'expired-deals', on: :collection
     resources :orders, only: [:new, :create]
+  end   
+  
+  resources :orders, only: [:index] do
+    get 'payment-success', to: 'orders#placed', on: :collection
+    get 'payment-failed', to: 'orders#failed', on: :collection
   end
 
-  resources :orders, only: [:index]
-  get 'order-success', to: 'orders#placed'
-  get 'order-failed', to: 'orders#failed'
-
   namespace :admin do
-    resources :deals
+    resources :deals do
+      member do 
+        patch 'publish'
+        patch 'unpublish'
+      end
+    end
     resources :reports, only: [:index]
-    post 'filter-deals', to: 'reports#filter_deal'
   end
 
   namespace :merchant do
