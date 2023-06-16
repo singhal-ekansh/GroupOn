@@ -19,7 +19,7 @@ class Transaction < ApplicationRecord
 
   def change_deal_quantity_sold
     if failed? && status_was == 'pending'
-      order.deal.update_columns(qty_sold: order.deal.qty_sold - order.quantity)
+      order.deal.decrease_qty_by(order.quantity)
     end
   end
 end
