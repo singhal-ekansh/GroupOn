@@ -4,7 +4,6 @@ class ProcessDealOrdersJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    debugger
     @orders = Order.joins(:deal).where(deal: { expire_at: Date.yesterday }).where(status: :paid)
     set_orders_success 
     set_orders_failed
