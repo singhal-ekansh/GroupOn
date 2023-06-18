@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resource 'likes', only: [:create, :update, :destroy]
     get 'search', on: :collection
     get 'expired-deals', on: :collection
+    resources :reviews, only: [:create]
     resources :orders, only: [:new, :create]
   end   
   

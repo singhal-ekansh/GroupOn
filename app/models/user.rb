@@ -13,7 +13,8 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :orders, dependent: :restrict_with_error
   has_many :coupons, through: :orders
-
+  has_many :reviews, dependent: :destroy
+  
   after_create :generate_verify_token, unless: :is_admin?
   after_create_commit :send_verification_email, unless: :is_admin?
 

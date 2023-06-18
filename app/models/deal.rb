@@ -22,6 +22,7 @@ class Deal < ApplicationRecord
   has_many :likes, as: :likable, dependent: :destroy
   has_many :orders, dependent: :restrict_with_error
   has_many :coupons, through: :orders
+  has_many :reviews, as: :reviewable
 
   before_validation :check_if_deal_can_be_updated?, on: :update, if: -> { published_was && !qty_sold_changed?}
   before_destroy :check_if_deal_can_be_deleted?
