@@ -49,7 +49,6 @@ class Order < ApplicationRecord
   end
 
   private def process_order
-    debugger
     generate_coupons
     OrderMailer.completed(self).deliver_now
   end
