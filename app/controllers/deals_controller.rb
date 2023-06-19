@@ -4,18 +4,18 @@ class DealsController < ApplicationController
   before_action :set_like_dislike_count, only: [:index, :expired_deals, :search]
 
   def index
-    @deals = Deal.includes(:likes, :deal_images, :locations).published.live.paginate(page: params[:page])
+    @deals = Deal.includes(:likes, :images, :locations).published.live.paginate(page: params[:page])
   end
 
   def show
   end
 
   def expired_deals
-    @deals = Deal.includes(:likes, :deal_images, :locations).published.expired.paginate(page: params[:page])
+    @deals = Deal.includes(:likes, :images, :locations).published.expired.paginate(page: params[:page])
   end
 
   def search
-    @deals = Deal.includes(:likes, :deal_images, :locations).published.paginate(page: params[:page])
+    @deals = Deal.includes(:likes, :images, :locations).published.paginate(page: params[:page])
     @deals = params[:deal_type] == 'live' ? @deals.live : @deals.expired
 
     @deals = @deals.search_by_city_and_title("%#{params[:query]}%") if !params[:query].blank?

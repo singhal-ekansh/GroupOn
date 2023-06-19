@@ -89,11 +89,11 @@
       <div class="mt-4">
         <%= form.label :images %>
         <ul class="images">
-          <%= form.fields_for :deal_images do |image_form| %>
+          <%= form.fields_for :images do |image_form| %>
             <%= render 'deal_image', form: image_form %>
           <% end %>
         </ul>
-        <%= link_to_add_row('Add Image', form, :deal_images, class: 'btn btn-primary', target: ".images") %>
+        <%= link_to_add_row('Add Image', form, :images, class: 'btn btn-primary', target: ".images") %>
       </div>
 
       <div class="mt-4">

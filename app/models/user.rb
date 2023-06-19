@@ -15,6 +15,9 @@ class User < ApplicationRecord
   has_many :coupons, through: :orders
   has_many :reviews, dependent: :destroy
   
+  has_one :image, as: :imageable, dependent: :destroy
+  accepts_nested_attributes_for :image, update_only: true, allow_destroy: true, reject_if: ->(attr) { !attr.key?('file') }
+
   after_create :generate_verify_token, unless: :is_admin?
   after_create_commit :send_verification_email, unless: :is_admin?
 

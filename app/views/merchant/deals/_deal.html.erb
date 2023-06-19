@@ -1,9 +1,9 @@
 <%= stylesheet_link_tag "deal_card"%>
 <div class="card my-3 mx-3 bg-light shadow text-dark" >
   <div class="row no-gutters">
-    <% if !deal.deal_images.empty? && deal.deal_images[0].file.attached? %>
+    <% if !deal.images.empty? && deal.images[0].file.attached? %>
     <div class="col-md-2 d-flex align-items-center">
-      <%= image_tag deal.deal_images[0].file, class: "card-img img-fluid img-fixed-size mb-0" %>
+      <%= image_tag deal.images[0].file, class: "card-img img-fluid img-fixed-size mb-0" %>
     </div>
     <% end %>
     <div class="col-md-8">

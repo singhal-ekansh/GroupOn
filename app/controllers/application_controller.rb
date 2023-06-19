@@ -25,5 +25,4 @@ class ApplicationController < ActionController::Base
       redirect_back fallback_location: root_path , alert: 'Already logged in'
     end
   end
-
 end

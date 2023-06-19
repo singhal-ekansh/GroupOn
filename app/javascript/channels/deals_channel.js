@@ -2,7 +2,6 @@ import consumer from "channels/consumer"
 
 consumer.subscriptions.create("DealsChannel", {
   connected() {
-    console.log("hahha")
     // Called when the subscription is ready for use on the server
   },
 
