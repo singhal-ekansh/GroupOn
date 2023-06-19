@@ -31,6 +31,7 @@ Rails.application.routes.draw do
         patch 'unpublish'
       end
     end
+    resources :reports, only: [:index]
   end
 
   resources :coupons, only: [:index]
