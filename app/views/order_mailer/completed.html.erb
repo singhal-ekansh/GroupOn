@@ -1,0 +1,7 @@
+<H1> Your order has been successfully Completed </h1>
+
+<p>here are your coupons for your deal purchased</p>
+
+<% @order.coupons.each do |coupon|%>
+  <strong> <%= coupon.code %> </strong>
+<%end%>

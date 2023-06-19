@@ -1,6 +1,6 @@
 class StripeCheckoutService
 
-  def initialize(success_url, cancel_url, order)
+  def initialize(success_url = nil, cancel_url = nil, order)
     @success_url = success_url
     @cancel_url = cancel_url
     @order = order
@@ -14,6 +14,12 @@ class StripeCheckoutService
 
   def get_stripe_url
     @stripe_session.url
+  end
+
+  def generate_refund
+    retreive_checkout_session
+    refund_object = Stripe::Refund.create( payment_intent: @stripe_session.payment_intent)
+    @order.payment_transactions.create(stripe_id: refund_object.id, status: :refunded)
   end
 
   private def generate_stripe_session
@@ -43,4 +49,8 @@ class StripeCheckoutService
     transaction.save
   end
 
+  private def retreive_checkout_session
+    checkout_id = @order.payment_transactions.find_by(status: :paid).stripe_id
+    @stripe_session = Stripe::Checkout::Session.retrieve(checkout_id)
+  end
 end
