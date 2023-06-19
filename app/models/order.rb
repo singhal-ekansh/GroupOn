@@ -40,7 +40,6 @@ class Order < ApplicationRecord
   end
 
   private def update_deal_quantity
-    debugger
     deal.increase_qty_by(quantity)
   end
 
@@ -49,7 +48,6 @@ class Order < ApplicationRecord
   end
 
   private def process_order
-    debugger
     generate_coupons
     OrderMailer.completed(self).deliver_now
   end
