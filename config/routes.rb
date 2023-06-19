@@ -11,12 +11,18 @@ Rails.application.routes.draw do
   resources :reset_passwords, only: [:create, :new]
 
   resources :sessions, only: [:create, :new, :destroy]
-
+  
   resources :deals, only: [:index, :show] do 
     resource 'likes', only: [:create, :update, :destroy]
     get 'search', on: :collection
     get 'expired-deals', on: :collection
+    resources :orders, only: [:new, :create]
   end   
+  
+  resources :orders, only: [:index] do
+    get 'payment-success', to: 'orders#placed', on: :collection
+    get 'payment-failed', to: 'orders#failed', on: :collection
+  end
 
   namespace :admin do
     resources :deals do
@@ -26,5 +32,5 @@ Rails.application.routes.draw do
       end
     end
   end
-  root "admin/deals#index"
+  root "deals#index"
 end

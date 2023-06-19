@@ -14,6 +14,9 @@ gem 'bootsnap', require: false
 
 gem "cssbundling-rails", "~> 1.1"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
+
+gem 'delayed_job_active_record'
+
 gem 'importmap-rails'
 # Use Sass to process CSS
 gem "sassc-rails"
@@ -35,11 +38,15 @@ gem 'sprockets-rails'
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'stimulus-rails'
 
+gem 'stripe'
+
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem 'turbo-rails'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+
+gem 'whenever'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
