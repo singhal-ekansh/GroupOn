@@ -30,3 +30,4 @@
 </div>
 
 <%=render @deals, likes_count: @likes_count, dislikes_count: @dislikes_count, live: true%>
+<%= will_paginate @deals, class: "apple_pagination" %>

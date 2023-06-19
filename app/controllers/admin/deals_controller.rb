@@ -14,7 +14,7 @@ class Admin::DealsController < Admin::BaseController
   end
 
   def index
-    @deals = Deal.includes(:deal_images)
+    @deals = Deal.includes(:deal_images, :locations).paginate(page: params[:page])
   end
 
   def create

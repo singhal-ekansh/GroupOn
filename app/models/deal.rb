@@ -1,4 +1,5 @@
 class Deal < ApplicationRecord
+  self.per_page = 2
   validates :title, presence: true
   validate :ensure_published_by_admin
 
