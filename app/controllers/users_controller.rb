@@ -24,6 +24,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    current_user.build_image
   end
 
   def update
@@ -52,6 +53,6 @@ class UsersController < ApplicationController
 
  
   private def user_params
-    params.require(:user).permit(:first_name, :last_name, :password, :password_confirmation, :email)
+    params.require(:user).permit(:first_name, :last_name, :password, :password_confirmation, :email, image_attributes: [:file, :_destroy])
   end
 end
