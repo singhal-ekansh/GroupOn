@@ -32,5 +32,7 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :coupons, only: [:index]
   root "deals#index"
 end

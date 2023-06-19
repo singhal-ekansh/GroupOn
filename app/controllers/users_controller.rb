@@ -8,6 +8,8 @@ class UsersController < ApplicationController
   end
 
   def show
+    @orders_count = current_user.orders.count
+    @coupons_count = current_user.coupons.count
   end
 
   def create
