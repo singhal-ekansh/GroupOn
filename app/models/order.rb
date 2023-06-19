@@ -1,16 +1,16 @@
 class Order < ApplicationRecord
   self.per_page = 6
   validates :quantity, :amount, :status, presence: true
-  validates :quantity, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validate :check_deal_availaible, if: [:quantity, :deal], on: :create
-  validate :check_deal_published, if: :deal, on: :create
-  validate :check_deal_live, if: :deal, on: :create
+  validates :quantity, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
+  validates :amount, numericality: { greater_than_or_equal_to: 0.01 }
+  validate :check_deal_availaible, if: [:quantity, :deal]
+  validate :check_deal_valid, if: ->{ status.in?(['paid', 'pending']) }
   validate :check_max_deal_per_user, if: [:quantity, :deal], on: :create
 
   belongs_to :user
   belongs_to :deal
   has_many :payment_transactions, class_name: 'Transaction'
-  has_many :coupons, dependent: :destroy
+  has_many :coupons, dependent: :restrict_with_error
 
   enum :status, [:pending, :paid, :processed, :canceled]
 
@@ -25,15 +25,14 @@ class Order < ApplicationRecord
   end
 
   private def check_deal_availaible
-    errors.add(:quantity, 'exceed more than availaible deals') if quantity > (deal.total_availaible - deal.qty_sold)
+    if status.in?(['pending', 'paid'])
+      errors.add(:quantity, 'exceed more than availaible deals') if quantity > (deal.total_availaible - deal.qty_sold + (quantity_was || 0))
+    end
   end
 
-  private def check_deal_published
-    errors.add(:base, 'order can be placed only for published deals') if !deal.published
-  end
-
-  private def check_deal_live
-    errors.add(:base, 'order can be placed only for live deals') if !Date.today.between?(deal.start_at, deal.expire_at)
+  private def check_deal_valid
+    return if !deal
+    errors.add(:base, 'order can be placed only for live and published deals') if !Date.today.between?(deal.start_at, deal.expire_at) || !deal.published
   end
 
   private def check_max_deal_per_user
@@ -42,7 +41,7 @@ class Order < ApplicationRecord
   end
 
   private def update_deal_quantity
-    deal.update_columns(qty_sold: deal.qty_sold + quantity)
+    deal.increase_qty_by(quantity)
   end
 
   private def set_order_verify_job
