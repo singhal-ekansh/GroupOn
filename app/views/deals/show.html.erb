@@ -94,7 +94,7 @@
       <strong>Reviews:</strong>
       <br><br>
       <ul>
-        <%@deal.reviews.each do |review|%>
+        <%@deal.reviews.includes(:user).each do |review|%>
           <li>
             <%= review.body %>
             <br>
@@ -103,7 +103,7 @@
           <hr>
         <%end%>
       </ul>
-      <% if !current_user.reviews.find_by(reviewable: @deal) %>
+      <% if !@deal.reviews.find_by(user: current_user) %>
         <%= form_with url: deal_reviews_path(@deal) do |form|%>
           <div class="form-group">
             <%= form.text_field :review_body , class: "form-control", placeholder: "add a review", required: true %>

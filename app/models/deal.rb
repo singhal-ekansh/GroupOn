@@ -1,5 +1,5 @@
 class Deal < ApplicationRecord
-  self.per_page = 2
+  self.per_page = 4
   validates :title, presence: true
   validate :ensure_published_by_admin
 
@@ -35,12 +35,12 @@ class Deal < ApplicationRecord
   scope :most_revenue, -> (start_date = Date.today, end_date = nil) { joins(:orders).where(orders: {status: :processed, created_at: (start_date..end_date)}).group(:id, :title).order("sum(orders.amount) desc").sum(:amount) }
   
 
-  def increase_qty_by(quantity)
+  def increase_qty_sold_by(quantity)
     update(qty_sold: qty_sold + quantity)
     ActionCable.server.broadcast('deals_channel', {deal_id: id, qty: total_availaible - qty_sold })
   end
 
-  def decrease_qty_by(quantity)
+  def decrease_qty_sold_by(quantity)
     update(qty_sold: qty_sold - quantity)
     ActionCable.server.broadcast('deals_channel', {deal_id: id, qty: total_availaible - qty_sold })
   end

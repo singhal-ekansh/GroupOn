@@ -4,7 +4,7 @@ class DealsController < ApplicationController
   before_action :set_like_dislike_count, only: [:index, :expired_deals, :search]
 
   def index
-    @deals = Deal.includes(:likes, :images, :locations).published.live.paginate(page: params[:page])
+    @deals = Deal.includes(:likes, [images: [file_attachment: :blob]], :locations).published.live.paginate(page: params[:page])
   end
 
   def show
@@ -30,7 +30,7 @@ class DealsController < ApplicationController
   end
 
   private def set_deal
-    @deal = Deal.find_by(id: params[:id])
+    @deal = Deal.includes([images: [file_attachment: :blob]]).find_by(id: params[:id])
     redirect_to deals_path, alert: 'invalid deal' if !@deal
   end
 end

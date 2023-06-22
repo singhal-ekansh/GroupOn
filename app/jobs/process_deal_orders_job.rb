@@ -10,11 +10,11 @@ class ProcessDealOrdersJob < ApplicationJob
   end
 
   private def set_orders_success
-    @orders.where('deal.qty_sold >= deal.threshold_value').update(status: :processed, processed_at: Time.now)
+    @orders.where('deal.qty_sold >= deal.threshold_value').update(status: :processed)
   end
 
   private def set_orders_failed
-    @orders.where('deal.qty_sold < deal.threshold_value').update(status: :canceled, processed_at: Time.now)
+    @orders.where('deal.qty_sold < deal.threshold_value').update(status: :canceled)
   end
 
 end

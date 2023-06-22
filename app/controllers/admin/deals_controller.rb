@@ -14,7 +14,7 @@ class Admin::DealsController < Admin::BaseController
   end
 
   def index
-    @deals = Deal.includes(:images, :locations).paginate(page: params[:page])
+    @deals = Deal.includes([images: [file_attachment: :blob]], :locations).paginate(page: params[:page])
   end
 
   def create

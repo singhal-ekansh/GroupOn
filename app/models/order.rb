@@ -15,11 +15,12 @@ class Order < ApplicationRecord
   enum :status, [:pending, :paid, :processed, :canceled]
 
   before_validation :set_amount, if: :quantity_changed?
-  after_create :update_deal_quantity
+  after_create :hold_deal_quantity
   after_create :set_order_verify_job
   before_update :process_order, if: ->{ processed? && status_was == 'paid' }
-  before_update :cancel_order, if: ->{ canceled? && status_was == 'paid' }
-
+  before_update :release_deal_quantity, if: ->{ canceled? && status_was.in?(['paid', 'pending']) }
+  before_update :refund_order, if: ->{ canceled? && status_was == 'paid' }
+ 
   private def set_amount
     self.amount = quantity * deal.price
   end
@@ -40,8 +41,12 @@ class Order < ApplicationRecord
     errors.add(:base, "you can buy only #{deal.max_per_user - quantity_already_purchased} more deal") if quantity_already_purchased + quantity > deal.max_per_user
   end
 
-  private def update_deal_quantity
-    deal.increase_qty_by(quantity)
+  private def hold_deal_quantity
+    deal.increase_qty_sold_by(quantity)
+  end
+
+  private def release_deal_quantity
+    deal.decrease_qty_sold_by(quantity)
   end
 
   private def set_order_verify_job
@@ -49,11 +54,13 @@ class Order < ApplicationRecord
   end
 
   private def process_order
+    processed_at = Time.now
     generate_coupons
-    OrderMailer.completed(self).deliver_now
+    OrderMailer.completed(self).deliver_later
   end
 
-  private def cancel_order
+  private def refund_order
+    processed_at = Time.now
     StripeCheckoutService.new(self).generate_refund
     OrderMailer.cancelled(self).deliver_later
   end

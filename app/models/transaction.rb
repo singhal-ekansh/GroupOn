@@ -5,7 +5,6 @@ class Transaction < ApplicationRecord
   belongs_to :order
 
   before_update :change_order_status
-  before_update :change_deal_quantity_sold
 
   enum :status, [:pending, :paid, :failed, :refunded]
 
@@ -14,12 +13,6 @@ class Transaction < ApplicationRecord
       order.paid!
     elsif failed? && status_was == 'pending'
       order.canceled!
-    end
-  end
-
-  def change_deal_quantity_sold
-    if failed? && status_was == 'pending'
-      order.deal.decrease_qty_by(order.quantity)
     end
   end
 end
