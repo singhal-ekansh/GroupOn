@@ -10,7 +10,6 @@ consumer.subscriptions.create("DealsChannel", {
   },
 
   received(data) {
-    console.log(data)
     document.getElementById('quantity-' + data.deal_id).innerHTML = `<strong>Total Available: </strong> ${data.qty}`
     // Called when there's incoming data on the websocket for this channel
   }
