@@ -14,10 +14,10 @@
               <div class="col"> <strong><%= "Spending"%></strong></div>
             </div>
             <br>
-            <% @top_customers&.each do |customer, amount| %>
+            <% @top_customers&.each do |customer| %>
               <div class="row">
-                <div class="col"> <%= "#{customer[1]} #{customer[2]}"%></div>
-                <div class="col"> <%= "Rs #{amount}"%></div>
+                <div class="col"> <%= "#{customer.first_name} #{customer.last_name}"%></div>
+                <div class="col"> <%= "Rs #{customer.spending}"%></div>
               </div>
             <% end %>
           </div>
@@ -49,11 +49,12 @@
               <div class="col"> <strong><%= "Revenue"%></strong></div>
             </div>
             <br>
-            <% @top_deals&.each do |deal, amount| %>
+            <% @top_deals&.each do |deal| %>
               <div class="row">
-                <div class="col"> <%= "#{deal[1]}"%></div>
-                <div class="col"> <%= "#{amount}"%></div>
+                <div class="col"> <%= "#{deal.title}"%></div>
+                <div class="col"> <%= "#{deal.revenue}"%></div>
               </div>
+              <hr>
             <% end %>
           </div>
         </div>
@@ -69,10 +70,10 @@
               <div class="col"> <strong><%= "Qty Sold"%></strong></div>
             </div>
               <br>
-            <% @top_categories&.each do |category, qty| %>
+            <% @top_categories&.each do |category| %>
               <div class="row">
-                <div class="col"> <%= "#{category[1]}"%></div>
-                <div class="col"> <%= "#{qty}"%></div>
+                <div class="col"> <%= "#{category.name}"%></div>
+                <div class="col"> <%= "#{category.quantity_sold}"%></div>
               </div>
             <% end %>
           </div>

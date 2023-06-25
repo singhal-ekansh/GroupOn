@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @orders = current_user.orders.order(created_at: :desc).paginate(page: params[:page])
+    @orders = current_user.orders.includes(:deal).order(created_at: :desc).paginate(page: params[:page])
   end
 
   def create
