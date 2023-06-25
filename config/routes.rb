@@ -18,6 +18,9 @@ Rails.application.routes.draw do
     get 'expired-deals', on: :collection
     resources :reviews, only: [:create]
     resources :orders, only: [:new, :create]
+    resources :referrals, only: [:new, :create] do 
+      patch 'accept-invite', on: :collection
+    end
   end   
   
   resources :orders, only: [:index] do

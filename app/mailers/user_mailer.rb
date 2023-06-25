@@ -9,4 +9,9 @@ class UserMailer < ApplicationMailer
     @token = token
     mail to: user.email, subject: 'GroupOn account recovery'
   end
+
+  def send_referral(referral, token)
+    @token = token
+    mail to: user.referee_email, subject: 'GroupOn Deal Referral'
+  end
 end
