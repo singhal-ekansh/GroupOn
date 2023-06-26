@@ -49,4 +49,16 @@ Rails.application.routes.draw do
 
   resources :coupons, only: [:index]
   root "deals#index"
+
+  # hotel routes
+  
+  resources :branches do
+    resources :bookings
+    resources :rooms
+  end
+
+  resources :users do
+    resorces :bookings
+  end
+
 end
