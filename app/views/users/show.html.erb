@@ -4,9 +4,14 @@
       <div class="col col-lg-9 col-xl-8">
         <div class="card">
           <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
-            <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-              <%= image_tag "https://pdtxar.com/wp-content/uploads/2019/04/person-placeholder.jpg", class: "img-fluid img-thumbnail mt-4 mb-2",
+            <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px; height: 150px;">
+              <% if current_user.image%>
+                <%= image_tag current_user.image.file, class: "img-fluid img-thumbnail mt-4 mb-2",
                 style: "width: 150px; z-index: 1" %>
+              <% else %>
+                 <%= image_tag "https://pdtxar.com/wp-content/uploads/2019/04/person-placeholder.jpg", class: "img-fluid img-thumbnail mt-4 mb-2",
+                style: "width: 150px; z-index: 1" %>
+              <% end %>  
               <%= link_to "Edit Profile", edit_user_path(current_user), class: "btn btn-outline-dark", style: "z-index: 1;", 'data-mdb-ripple-color': "dark" %>
             </div>
             <div class="ms-3" style="margin-top: 130px;">

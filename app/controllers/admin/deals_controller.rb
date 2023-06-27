@@ -4,7 +4,7 @@ class Admin::DealsController < Admin::BaseController
   def new
     @deal = Deal.new
     @deal.locations.build
-    @deal.deal_images.build
+    @deal.images.build
   end
 
   def edit
@@ -14,7 +14,7 @@ class Admin::DealsController < Admin::BaseController
   end
 
   def index
-    @deals = Deal.includes(:deal_images, :locations).paginate(page: params[:page])
+    @deals = Deal.includes(:images, :locations).paginate(page: params[:page])
   end
 
   def create
@@ -62,7 +62,7 @@ class Admin::DealsController < Admin::BaseController
 
   private def deal_params
     params.require(:deal).permit(:title, :description, :threshold_value, :total_availaible, :price, :start_at,
-       :expire_at, :max_per_user, :category_id, :published, deal_images_attributes: [:id, :_destroy, :file],
+       :expire_at, :max_per_user, :category_id, :published, images_attributes: [:id, :_destroy, :file],
         locations_attributes: [:id, :address, :country, :city, :state, :pincode, :_destroy])
   end
 
