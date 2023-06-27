@@ -35,10 +35,12 @@ class Deal < ApplicationRecord
 
   def increase_qty_by(quantity)
     update(qty_sold: qty_sold + quantity)
+    ActionCable.server.broadcast('deals_channel', {deal_id: id, qty: total_availaible - qty_sold })
   end
 
   def decrease_qty_by(quantity)
     update(qty_sold: qty_sold - quantity)
+    ActionCable.server.broadcast('deals_channel', {deal_id: id, qty: total_availaible - qty_sold })
   end
 
   private def check_if_deal_can_be_updated?
