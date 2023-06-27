@@ -13,6 +13,7 @@ class Deal < ApplicationRecord
   end
 
   belongs_to :user
+  belongs_to :merchant, class_name: "User"
   belongs_to :category
   has_many :deal_images, dependent: :destroy
   has_many :locations, dependent: :destroy

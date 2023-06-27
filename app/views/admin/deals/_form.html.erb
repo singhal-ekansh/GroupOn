@@ -73,6 +73,13 @@
       </div>
 
       <div class="mt-4">
+        <div class="form-group">
+          <%= form.label :merchant_id, 'Deal Merchant' %>
+          <%= form.select :merchant_id, User.where(role: :merchant).collect { |c| ["#{c.first_name} #{c.last_name}", c.id] }, { prompt: 'Select One' }, class: 'form-select custom-select-lg' %>
+        </div>
+      </div>
+
+      <div class="mt-4">
         <div class="form-check">
           <%= form.label :published, class: "form-check-label" %>
           <%= form.check_box :published, class: "form-check-input" %>

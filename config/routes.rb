@@ -34,6 +34,15 @@ Rails.application.routes.draw do
     resources :reports, only: [:index]
   end
 
+  namespace :merchant do
+    resources :deals, only: [:index, :show] do
+      resources :orders, only: [:index]
+      resources :coupons, only: [:index]
+    end
+    get 'redeem-coupons', to: 'coupons#redeem_coupons'
+    post 'redeem-coupons', to: 'coupons#redeem'
+  end
+
   resources :coupons, only: [:index]
   root "deals#index"
 end

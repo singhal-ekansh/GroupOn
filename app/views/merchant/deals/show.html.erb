@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="d-flex justify-content-center my-5">
+    <% @deal.deal_images.each_with_index do |image, index| %>
+      <div class="image-sliderfade">
+        <%= image_tag image.file, size: "800x300" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="deal-info mt-3 my-4">
+    <center>
+      <h3><%= @deal.title %></h3>
+    </center>
+    <br>
+    <div>
+      <strong>Description:</strong>
+      <p><%= @deal.description %></p>
+    </div>
+    <div class="row">
+      <div class="col">
+        <strong>Price:</strong>
+        <p>$<%= @deal.price %></p>
+      </div>
+      <div class="col">
+        <strong>Total Available:</strong>
+        <p><%= @deal.total_availaible %></p>
+      </div>
+      <div class="col">
+        <strong>Quantity sold:</strong>
+        <p><%= @deal.qty_sold %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <strong>Start Date:</strong>
+        <p><%= @deal.start_at.to_date if @deal.start_at %></p>
+      </div>
+      <div class="col">
+        <strong>Expiration Date:</strong>
+        <p><%= @deal.expire_at.to_date if @deal.expire_at %></p>
+      </div>
+      <div class="col">
+        <strong>Status:</strong>
+        <p><%= @deal.published ? 'Published' : 'Draft' %></p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <strong>Threshold Value:</strong>
+        <p><%= @deal.threshold_value %></p>
+      </div>
+      <div class="col">
+        <strong>Max per user:</strong>
+        <p><%= @deal.max_per_user %></p>
+      </div>
+
+      <div class="col">
+      </div>
+    </div>
+
+    <div>
+      <strong>Locations:</strong>
+      <br><br>
+      <% @deal.locations.each do |location| %>
+        <div class="row">
+          <div class="col">
+            <strong>Address:</strong>
+            <p><%= location.address %></p>
+          </div>
+        </div>  
+        <div class="row">
+          <div class="col">
+            <strong>Country:</strong>
+            <p><%= location.country %></p>
+          </div> 
+          <div class="col">
+            <strong>State:</strong>
+            <p><%= location.state %></p>
+          </div> 
+          <div class="col">
+            <strong>City:</strong>
+            <p><%= location.city %></p>
+          </div>
+          <div class="col">
+            <strong>Pincode:</strong>
+            <p><%= location.pincode %></p>
+          </div>  
+        </div>
+        <hr>
+      <% end %>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col">
+        <%= link_to "Show Orders", merchant_deal_orders_path(@deal), class: "btn btn-primary" %>
+      </div>
+      <div class="col">
+        <%= link_to "Show Coupons", merchant_deal_coupons_path(@deal), class: "btn btn-primary" %>
+      </div>
+      <div class="col">
+      </div>
+    </div>
+  </div>
+</div>
+<%= javascript_include_tag 'image_slider' %>
