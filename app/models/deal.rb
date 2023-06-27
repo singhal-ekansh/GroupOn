@@ -1,5 +1,5 @@
 class Deal < ApplicationRecord
-  self.per_page = 2
+  self.per_page = 4
   validates :title, presence: true
   validate :ensure_published_by_admin
 
@@ -22,6 +22,7 @@ class Deal < ApplicationRecord
   has_many :likes, as: :likable, dependent: :destroy
   has_many :orders, dependent: :restrict_with_error
   has_many :coupons, through: :orders
+  has_many :reviews, as: :reviewable
 
   before_validation :check_if_deal_can_be_updated?, on: :update, if: -> { published_was && !qty_sold_changed?}
   before_destroy :check_if_deal_can_be_deleted?
@@ -31,15 +32,15 @@ class Deal < ApplicationRecord
   scope :expired, -> { where.not(expire_at: (Date.today..))}
   scope :search_by_city_and_title, ->(query) { where("title LIKE ? OR locations.city LIKE ?", query, query).references(:locations) }
   scope :filter_by_category, ->(category_id) { where( category_id: category_id) }
-  scope :most_revenue, -> (start_date = Date.today, end_date = nil) { joins(:orders).where(orders: {status: :processed, created_at: (start_date..end_date)}).group(:id, :title).order("sum(orders.amount) desc").sum(:amount) }
+  scope :most_revenue, -> (start_date = Date.today - 1.month, end_date = nil) { joins(:orders).where(orders: {status: :processed, created_at: (start_date..end_date)}).group(:id).select(:id, :title, 'sum(orders.amount) as revenue').order("sum(orders.amount) desc") }
   
 
-  def increase_qty_by(quantity)
+  def increase_qty_sold_by(quantity)
     update(qty_sold: qty_sold + quantity)
     ActionCable.server.broadcast('deals_channel', {deal_id: id, qty: total_availaible - qty_sold })
   end
 
-  def decrease_qty_by(quantity)
+  def decrease_qty_sold_by(quantity)
     update(qty_sold: qty_sold - quantity)
     ActionCable.server.broadcast('deals_channel', {deal_id: id, qty: total_availaible - qty_sold })
   end

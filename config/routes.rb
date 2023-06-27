@@ -16,12 +16,13 @@ Rails.application.routes.draw do
     resource 'likes', only: [:create, :update, :destroy]
     get 'search', on: :collection
     get 'expired-deals', on: :collection
+    resources :reviews, only: [:create]
     resources :orders, only: [:new, :create]
   end   
   
   resources :orders, only: [:index] do
-    get 'payment-success', to: 'orders#placed', on: :collection
-    get 'payment-failed', to: 'orders#failed', on: :collection
+    get 'payment-success', on: :collection
+    get 'payment-failed', on: :collection
   end
 
   namespace :admin do

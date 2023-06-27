@@ -5,5 +5,5 @@ class Category < ApplicationRecord
 
   has_many :deals, dependent: :destroy
 
-  scope :popular, -> { joins(deals: :orders).group(:id, :name).order("sum(quantity) desc").sum(:quantity) }
+  scope :popular, -> { joins(deals: :orders).group(:id).order("sum(quantity) desc").select(:id, :name, 'sum(quantity) as quantity_sold' ) }
 end

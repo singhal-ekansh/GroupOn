@@ -3,7 +3,7 @@ class Merchant::OrdersController < ApplicationController
   before_action :set_deal, only: :index
 
   def index
-    @orders =  @deal.orders.order(created_at: :desc).paginate(page: params[:page])
+    @orders =  @deal.orders.includes(:deal).order(created_at: :desc).paginate(page: params[:page])
   end
 
   private def set_deal

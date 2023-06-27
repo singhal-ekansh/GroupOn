@@ -15,16 +15,16 @@ gem 'bootsnap', require: false
 gem "cssbundling-rails", "~> 1.1"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 
-gem 'delayed_job_active_record'
+gem 'delayed_job_active_record', '~> 4.1.7'
 
-gem 'importmap-rails'
+gem 'importmap-rails', '~> 1.2.1'
 # Use Sass to process CSS
-gem "sassc-rails"
+gem "sassc-rails", '~> 2.1.2'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem 'jbuilder'
+gem 'jbuilder', '~> 2.11.5'
 
-gem 'jsbundling-rails'
+gem 'jsbundling-rails', '~> 1.1.2'
 
 # Use mysql as the database for Active Record
 gem 'mysql2', '~> 0.5'
@@ -33,21 +33,21 @@ gem 'mysql2', '~> 0.5'
 gem 'puma', '~> 5.0'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem 'sprockets-rails'
+gem 'sprockets-rails', '~> 3.4.2'
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem 'stimulus-rails'
+gem 'stimulus-rails', '~> 1.2.1'
 
-gem 'stripe'
+gem 'stripe', '~> 8.5.0'
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem 'turbo-rails'
+gem 'turbo-rails', '~> 1.4.0'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-gem 'will_paginate'
-gem 'whenever'
+gem 'will_paginate', '~> 4.0.0'
+gem 'whenever', '~> 1.0.0'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

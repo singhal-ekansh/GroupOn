@@ -31,9 +31,9 @@
             </div>
           <%end%>
           
-          <% @like_value = @current_user.likes.find_by(likable: deal)&.is_liked %>
+          <% like_value = @user_likes_dislikes[deal.id] %>
 
-          <% if @like_value == nil %>
+          <% if like_value == nil %>
             <div class="col-auto">
             <%= button_to deal_likes_path(deal, value: true) do %>
               <%= image_tag ("like_empty.svg") , size: "20x20"%>
@@ -49,7 +49,7 @@
           </div>
 
           <% else %>
-            <% if @like_value %>
+            <% if like_value %>
               <div class="col-auto">
                 <%= button_to deal_likes_path(deal), method: :delete do %>
                   <%= image_tag "like_filled.svg" , size: "20x20"%>

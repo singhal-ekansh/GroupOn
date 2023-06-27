@@ -90,7 +90,7 @@
         <%= form.label :images %>
         <ul class="images">
           <%= form.fields_for :images do |image_form| %>
-            <%= render 'deal_image', form: image_form %>
+            <%= render 'image', form: image_form %>
           <% end %>
         </ul>
         <%= link_to_add_row('Add Image', form, :images, class: 'btn btn-primary', target: ".images") %>
