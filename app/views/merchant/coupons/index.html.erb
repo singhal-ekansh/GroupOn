@@ -1,0 +1,21 @@
+<div class="container">
+    <center><h1 class="mt-5">Deals Coupons</h1></center>
+    <div class="row mt-4 text-dark">
+      <% @coupons.each do |coupon| %>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+          <div class="card coupon-card">
+            <div class="card-body">
+              <h4><%= @deal.title %></h4>
+              <h5 class="card-title"><%= coupon.code %></h5>
+              <% if coupon.redeemed_at %>
+                <div class="chip redeemed-chip">Redeemed</div>
+              <% else %>
+                <div class="chip active-chip">Active</div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <%= stylesheet_link_tag 'coupon_card'%>

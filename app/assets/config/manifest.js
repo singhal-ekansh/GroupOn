@@ -10,3 +10,5 @@
 //= link add_more.js
 //= link image_slider.js
 // = link jquery_file.js
+//= link_tree ../../javascript .js
+//= link_tree ../../../vendor/javascript .js

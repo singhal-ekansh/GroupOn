@@ -13,6 +13,7 @@ class Deal < ApplicationRecord
   end
 
   belongs_to :user
+  belongs_to :merchant, class_name: "User"
   belongs_to :category
   has_many :deal_images, dependent: :destroy
   has_many :locations, dependent: :destroy
@@ -35,10 +36,12 @@ class Deal < ApplicationRecord
 
   def increase_qty_by(quantity)
     update(qty_sold: qty_sold + quantity)
+    ActionCable.server.broadcast('deals_channel', {deal_id: id, qty: total_availaible - qty_sold })
   end
 
   def decrease_qty_by(quantity)
     update(qty_sold: qty_sold - quantity)
+    ActionCable.server.broadcast('deals_channel', {deal_id: id, qty: total_availaible - qty_sold })
   end
 
   private def check_if_deal_can_be_updated?

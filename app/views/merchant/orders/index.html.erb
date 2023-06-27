@@ -1,0 +1,3 @@
+<center><h1>Deal Orders</h1></center>
+<%= render partial: 'orders/order', collection: @orders %>
+<%= will_paginate @orders, class: "apple_pagination" %>
