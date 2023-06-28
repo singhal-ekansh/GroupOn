@@ -89,6 +89,32 @@
       <% end %>
     </div>
     <br>
+
+    <div>
+      <strong>Reviews:</strong>
+      <br><br>
+      <ul>
+        <%@deal.reviews.each do |review|%>
+          <li>
+            <%= review.body %>
+            <br>
+            <%= "~ #{review.user.first_name}" %>
+          </li>
+          <hr>
+        <%end%>
+      </ul>
+      <% if !current_user.reviews.find_by(reviewable: @deal) %>
+        <%= form_with url: deal_reviews_path(@deal) do |form|%>
+          <div class="form-group">
+            <%= form.text_field :review_body , class: "form-control", placeholder: "add a review", required: true %>
+          </div>
+          <br>
+          <%= form.submit 'submit review', class: 'btn btn-primary'%>
+        <%end%>
+      <%end%>  
+    </div>
+    <br>
+    <hr>
     <div class="row">
       <div class="col">
         <%= link_to "Get Deal", new_deal_order_path(@deal), class: "btn btn-success" %>

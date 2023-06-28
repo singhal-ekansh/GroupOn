@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :orders, dependent: :restrict_with_error
   has_many :coupons, through: :orders
+  has_many :reviews, dependent: :destroy
+  
   has_one :image, as: :imageable, dependent: :destroy
   accepts_nested_attributes_for :image, update_only: true, allow_destroy: true, reject_if: ->(attr) { !attr.key?('file') }
 
