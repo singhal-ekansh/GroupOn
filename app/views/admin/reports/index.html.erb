@@ -79,5 +79,112 @@
           </div>
         </div>
       </div>
+
+
+       <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            Top 5 User with max order value 20
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col"> <strong><%= "Name"%></strong></div>
+              <div class="col"> <strong><%= "Spending"%></strong></div>
+            </div>
+              <br>
+            <% @spend_max_with_max_amount_20.each do |user| %>
+              <div class="row">
+                <div class="col"> <%= "#{user.first_name} #{user.last_name}"%></div>
+                <div class="col"> <%= "#{user.spending}"%></div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            User whose reviewed deals were processed last month
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col"> <strong><%= "Name"%></strong></div>
+            </div>
+              <br>
+            <% @users_reviewed_deal_processed_last_month.each do |user| %>
+              <div class="row">
+                <div class="col"> <%= "#{user.first_name} #{user.last_name}"%></div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            merchants with 2 image 5 reviews 10 likes
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col"> <strong><%= "Name"%></strong></div>
+            </div>
+              <br>
+            <% @merchant_deal_processed_with_pics_likes_reviews.each do |merchant| %>
+              <div class="row">
+                <div class="col"> <%= "#{merchant.first_name}"%></div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            Most disliked deal with order value 100
+          </div>
+          <div class="row">
+              <div class="col"> <strong><%= "Deal"%></strong></div>
+              <div class="col"> <strong><%= "dislikes"%></strong></div>
+            </div>
+            <br>
+            <% @most_disliked_deal_order_value_100&.each do |deal| %>
+              <div class="row">
+                <div class="col"> <%= "#{deal.title}"%></div>
+                <div class="col"> <%= "#{deal.dislikes}"%></div>
+              </div>
+              <hr>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            Most liked category with success orders
+          </div>
+          <div class="row">
+              <div class="col"> <strong><%= "category"%></strong></div>
+              <div class="col"> <strong><%= "likes"%></strong></div>
+            </div>
+            <br>
+            <% @most_liked_category&.each do |cat| %>
+              <div class="row">
+                <div class="col"> <%= "#{cat.name}"%></div>
+                <div class="col"> <%= "#{cat.likes}"%></div>
+              </div>
+              <hr>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>

@@ -267,25 +267,25 @@ DEPENDENCIES
   capybara
   cssbundling-rails (~> 1.1)
   debug
-  delayed_job_active_record
-  importmap-rails
-  jbuilder
-  jsbundling-rails
+  delayed_job_active_record (~> 4.1.7)
+  importmap-rails (~> 1.2.1)
+  jbuilder (~> 2.11.5)
+  jsbundling-rails (~> 1.1.2)
   mysql2 (~> 0.5)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
   rubocop-rails
-  sassc-rails
+  sassc-rails (~> 2.1.2)
   selenium-webdriver
-  sprockets-rails
-  stimulus-rails
-  stripe
-  turbo-rails
+  sprockets-rails (~> 3.4.2)
+  stimulus-rails (~> 1.2.1)
+  stripe (~> 8.5.0)
+  turbo-rails (~> 1.4.0)
   tzinfo-data
   web-console
   webdrivers
-  whenever
-  will_paginate
+  whenever (~> 1.0.0)
+  will_paginate (~> 4.0.0)
 
 RUBY VERSION
    ruby 3.1.3p185
