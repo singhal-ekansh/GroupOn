@@ -46,17 +46,17 @@ class Admin::DealsController < Admin::BaseController
 
   def publish
     if @deal.update(published: true)
-      redirect_to admin_deals_path, notice: 'deal published'
+      redirect_back_or_to admin_deals_path, notice: 'deal published'
     else
-      redirect_to admin_deals_path, alert: 'deal can not be published'
+      redirect_back_or_to admin_deals_path, alert: 'deal can not be published'
     end
   end
 
   def unpublish
     if @deal.update(published: false)
-      redirect_to admin_deals_path, notice: 'deal unpublished'
+      redirect_back_or_to admin_deals_path, notice: 'deal unpublished'
     else
-      redirect_to admin_deals_path, alert: 'can not unpublish deal'
+      redirect_back_or_to admin_deals_path, alert: 'can not unpublish deal'
     end
   end
 
